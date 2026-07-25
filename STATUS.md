@@ -1,6 +1,6 @@
 # STATUS
 
-_Regenerated 2026-07-24 by autonomous daily run (DOCS). Alias pairings per docs/PAIRING_ALIASES.md._
+_Regenerated 2026-07-25 by autonomous daily run (RELEASE). Alias pairings per docs/PAIRING_ALIASES.md._
 
 | Builder | Domain | Paired Reviewer | Last Touched | Flag |
 |---|---|---|---|---|
@@ -9,7 +9,7 @@ _Regenerated 2026-07-24 by autonomous daily run (DOCS). Alias pairings per docs/
 | a2l-builder.skill | calibration | a2l-checklist-reviewer.skill | 2026-07-23 | 🟢 |
 | apqp-plan-builder.skill | quality | apqp-plan-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | arxml-system-builder.skill | comms | arxml-system-checklist-reviewer.skill | 2026-05-02 | 🟡 |
-| aspice-assessment-builder.skill | aspice | aspice-assessment-checklist-reviewer.skill | 2026-06-25 | 🟢 |
+| aspice-assessment-builder.skill | aspice | aspice-assessment-checklist-reviewer.skill | 2026-06-25 | 🟡 |
 | aspice-gap-analysis-builder.skill | aspice | aspice-gap-analysis-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | aspice-improvement-plan-builder.skill | aspice | aspice-improvement-plan-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | aspice-process-evidence-builder.skill | aspice | aspice-process-evidence-checklist-reviewer.skill | 2026-05-01 | 🟡 |
@@ -23,7 +23,7 @@ _Regenerated 2026-07-24 by autonomous daily run (DOCS). Alias pairings per docs/
 | calibration-data-exchange-builder.skill | calibration | calibration-data-exchange-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | cdd-builder.skill | diagnostics | cdd-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | change-impact-analysis-builder.skill | program-mgmt | change-impact-analysis-checklist-reviewer.skill | 2026-05-02 | 🟡 |
-| communication-matrix-builder.skill | comms | communication-matrix-checklist-reviewer.skill | 2026-06-24 | 🟢 |
+| communication-matrix-builder.skill | comms | communication-matrix-checklist-reviewer.skill | 2026-06-24 | 🟡 |
 | control-plan-builder.skill | quality | control-plan-checklist-reviewer.skill | 2026-06-18 | 🟡 |
 | cs-architecture-builder.skill | cyber | cs-architecture-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | cs-concept-builder.skill | cyber | cs-concept-checklist-reviewer.skill | 2026-07-21 | 🟢 |
@@ -84,7 +84,7 @@ _Regenerated 2026-07-24 by autonomous daily run (DOCS). Alias pairings per docs/
 ## Summary
 
 - Builders: 76 · Reviewers: 76 · Paired: 76 (100%, incl. 2 alias pairings)
-- 🟢 Healthy (paired, touched ≤30d): 10
-- 🟡 Stale (30+ days): 66
+- 🟢 Healthy (paired, touched ≤30d): 8
+- 🟡 Stale (30+ days): 68
 - 🔴 Orphan (no reviewer): 0
 - Note: 🟡 wave reflects May bulk import; freshness-by-polish-log rule change still awaiting human sign-off (see W30 plan).

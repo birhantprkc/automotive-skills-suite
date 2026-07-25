@@ -6,7 +6,11 @@ from `[Unreleased]` into a dated section at each weekly release.
 
 ## [Unreleased]
 
-_Accumulating since v2026.07.W29 (2026-07-18). Ships at the next Saturday RELEASE run._
+_Accumulating since v2026.07.W30 (2026-07-25). Ships at the next Saturday RELEASE run._
+
+## [v2026.07.W30] — 2026-07-25
+
+_W30 (2026-07-20 → 2026-07-25). Accumulating since v2026.07.W29 (2026-07-18). Shipped by the Saturday RELEASE run (2026-07-25)._
 
 ### Polish
 - **cs-concept-builder** — W30 target (Tue 2026-07-21, #44): 3,361 trailing NUL bytes stripped from the generator; same pass surfaced 13 more corrupt archives repo-wide (`691f614`)
@@ -16,6 +20,12 @@ _Accumulating since v2026.07.W29 (2026-07-18). Ships at the next Saturday RELEAS
 ### Docs
 - W30 weekly plan published (Mon 2026-07-20) — targets: cs-concept→cs-architecture chain repair (#43), cs-concept NUL-strip (#44), ASPICE bundle wiring (#45), repo-wide chain-contract audit (#46), a2l polish (#47) (`a0c3d91`)
 - W30 DOCS roll (Fri 2026-07-24): `[Unreleased]` updated with W30 entries; 11 example README stubs added for skills touched this week — first reviewer-side stubs, per the touched-this-week rule; STATUS regenerated (this commit)
+
+### Release _(this snapshot commit)_
+- STATUS.md regenerated (76/76 paired, 8 fresh / 68 stale; aspice-assessment-builder aged past the 30-day line)
+- RELEASES.md appended with the v2026.07.W30 section
+- CHANGELOG `[Unreleased]` rolled into this dated section
+- `docs/AUTONOMOUS_LOG.md` updated with the RELEASE-mode entry
 
 ## [v2026.07.W29] — 2026-07-18
 

@@ -353,3 +353,41 @@ ISO week 29 (2026-07-13 → 2026-07-18). **Two-week snapshot**: the W28 Sat RELE
 ### Compare
 
 https://github.com/jherrodthomas/automotive-skills-suite/compare/v2026.07.W27...v2026.07.W29
+
+## v2026.07.W30 — 2026-07-25
+
+ISO week 30 (2026-07-20 → 2026-07-25). Weekly snapshot, 5 commits.
+
+### Highlights
+
+- **NUL-corruption campaign**: the W30 plan flagged cs-concept-builder's generator carrying 3,361 trailing NUL bytes (#44, fixed Tue `691f614`); the same pass surfaced 13 more corrupt archives repo-wide, all cleaned in Wednesday's batch (`8a855cf`) — 9 generators compile again and prior xlsx false-positive findings were corrected.
+- **a2l-builder repaired** (#47, Thu `661c4bb`): real TypeError crash in axis-points handling fixed (type-tolerant `len()` guard), frontmatter trigger strengthened, 13-tab output smoke-verified.
+- Friday DOCS roll added 11 example README stubs — including the repo's first reviewer-side stubs (flagged for human confirmation). W30 targets #44 and #47 met; #43 (cs chain repair), #45 (ASPICE wiring), #46 (chain-contract audit) carry into W31.
+
+### Changes this week
+
+**plan**
+- `a0c3d91` auto(plan): W30 targets — cs chain repair, NUL-strip, aspice bundle, audit, a2l
+
+**polish**
+- `691f614` auto(polish): cs-concept NUL-strip fixed per #44; 13 more corrupt archives found
+- `8a855cf` auto(polish): batch NUL-strip 13 archives, 9 generators compile again, xlsx false-positives corrected
+- `661c4bb` auto(polish): a2l-builder axis points crash fixed, trigger strengthened, 13 tabs verified
+
+**docs**
+- `f92275c` auto(docs): W30 changelog roll, 11 example stubs, STATUS regen
+
+**docs / release** _(this snapshot commit)_
+- STATUS.md regenerated (76/76 paired, 8 fresh / 68 stale; aspice-assessment-builder aged past the 30-day line)
+- RELEASES.md updated with this W30 section
+- CHANGELOG.md `[Unreleased]` rolled into a dated `[v2026.07.W30]` section
+- `docs/AUTONOMOUS_LOG.md` updated with the RELEASE-mode entry
+
+### Skills inventory
+
+- Builders: **76** · Reviewers: **76** · Paired ratio: **100.0%** (76/76, 2 via docs/PAIRING_ALIASES.md)
+- Domain spread: safety 15, comms 8, cyber 6, other 5, quality 5, autosar 5, diagnostics 5, program-mgmt 5, v&v 5, aspice 4, sysml 4, calibration 3, mbse 3, sotif 3
+
+### Compare
+
+https://github.com/jherrodthomas/automotive-skills-suite/compare/v2026.07.W29...v2026.07.W30

@@ -978,3 +978,17 @@ Standout finding is non-DoD and more impactful than the trigger gaps: the SKILL.
 - Sat RELEASE: W30 had 4+ commits — tag v2026.07.W4 (ISO week within July) and roll [Unreleased]
 - W30 targets #43 (chain repair), #45 (ASPICE wiring), #46 (chain-contract audit) still open with 1 working day left — likely carry into W31 plan
 - Human: confirm reviewer-side example stubs are wanted (see Notes)
+
+## 2026-07-25 (autonomous run, RELEASE)
+
+**Mode:** RELEASE
+**Action:** Tagged v2026.07.W30 weekly snapshot; RELEASES.md W30 section appended, CHANGELOG [Unreleased] rolled into [v2026.07.W30], STATUS regenerated.
+**Files touched:** RELEASES.md, CHANGELOG.md, STATUS.md, docs/AUTONOMOUS_LOG.md
+**Tests:** N/A (no test suite in this repo yet)
+**Skill count:** 76 builders / 76 reviewers / 100% paired (incl. 2 alias pairings per docs/PAIRING_ALIASES.md)
+**Open issues:** 5 (#43–#47, all W30 weekly-targets; #44 and #47 have their DoD met and await human close)
+**Notes:** Judgement call on the tag name: Friday's follow-up suggested "v2026.07.W4 (ISO week within July)" but all eight existing tags (v2026.05.W20 … v2026.07.W29) use the ISO week-of-year number, so repo precedent wins — tagged v2026.07.W30. Lightweight tag only; no GitHub Release object published (human clicks Publish after reviewing RELEASES.md, and the W29 Publish is still pending too). STATUS fresh-count dropped 10 → 8: aspice-assessment-builder (2026-06-25) and one other crossed the 30-day line today; the 🟡 wave remains the May bulk-import artifact. The standard /tmp/automotive-work workdir was usable again this run — the locked-clone issue from 07-23/07-24 did not recur.
+**Follow-ups:**
+- Mon PLAN: carry #43 (cs chain repair, needs real cs-concept fixture), #45 (ASPICE wiring), #46 (chain-contract audit) into W31 targets.
+- Human: click Publish on v2026.07.W29 and v2026.07.W30 in RELEASES; close #44 and #47 if satisfied; confirm reviewer-side example stubs decision (07-24 note).
+- Standing: vanished-issues pattern #33–#42 still unexplained.
