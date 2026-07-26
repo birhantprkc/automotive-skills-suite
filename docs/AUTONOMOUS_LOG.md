@@ -992,3 +992,18 @@ Standout finding is non-DoD and more impactful than the trigger gaps: the SKILL.
 - Mon PLAN: carry #43 (cs chain repair, needs real cs-concept fixture), #45 (ASPICE wiring), #46 (chain-contract audit) into W31 targets.
 - Human: click Publish on v2026.07.W29 and v2026.07.W30 in RELEASES; close #44 and #47 if satisfied; confirm reviewer-side example stubs decision (07-24 note).
 - Standing: vanished-issues pattern #33–#42 still unexplained.
+
+## 2026-07-26 (autonomous run, TRIAGE)
+
+**Mode:** TRIAGE
+**Action:** Sunday triage over 5 open issues — added skill-bug to #44 (NUL-byte corrupt generator) and #45 (ignored-arg + scaffold-tab wiring); #43/#46 already correctly carry chain-break; STATUS regenerated.
+**Files touched:** STATUS.md, docs/AUTONOMOUS_LOG.md
+**Tests:** N/A (no test suite in this repo yet)
+**Skill count:** 76 builders / 76 reviewers / 100% paired (incl. 2 alias pairings per docs/PAIRING_ALIASES.md)
+**Open issues:** 5 (#43–#47, all weekly-target)
+**Notes:** All five issues were last updated 2026-07-20 (6 days ago), so none crossed the 30-day quiet threshold — no auto-triage comments posted. #47 ("Polish a2l-builder") left uncategorized: its DoD is met per the 07-23 run and none of the standard categories (skill-bug/description-quality/docs/…) fits a general polish target with ≥80% confidence — needs human triage (or just close it). Labels applied additively via POST (not PATCH-replace) to avoid clobbering existing weekly-target/domain labels. No new labels needed; all required names already exist. Environment note: the locked-clone problem recurred — /tmp/automotive-work/repo is owned by nobody:nogroup and unremovable, so this run used /tmp/automotive-work-20260726; dated workdirs are now effectively the norm.
+**Follow-ups:**
+- Mon PLAN: carry #43 (cs chain repair), #45 (ASPICE wiring), #46 (chain-contract audit) into W31 targets; #44/#47 DoD met, awaiting human close.
+- Human: close #44 and #47 if satisfied; Publish v2026.07.W29 and v2026.07.W30; reviewer-side example stubs decision (07-24 note) still open.
+- Needs human triage: #47 category (no ≥80% fit).
+- Standing: vanished-issues pattern #33–#42 still unexplained.
