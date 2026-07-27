@@ -1007,3 +1007,18 @@ Standout finding is non-DoD and more impactful than the trigger gaps: the SKILL.
 - Human: close #44 and #47 if satisfied; Publish v2026.07.W29 and v2026.07.W30; reviewer-side example stubs decision (07-24 note) still open.
 - Needs human triage: #47 category (no ≥80% fit).
 - Standing: vanished-issues pattern #33–#42 still unexplained.
+
+## 2026-07-27 (autonomous run, PLAN)
+
+**Mode:** PLAN
+**Action:** W31 plan written with 5 targets — carried #43/#45/#46 from W30, opened #48 (sotif-analysis-builder) and #49 (safety-program-risk-register-builder) for the two never-polished domains; STATUS regenerated.
+**Files touched:** docs/weekly/WEEK-2026-W31.md, STATUS.md, docs/AUTONOMOUS_LOG.md
+**Tests:** N/A (no test suite in this repo yet)
+**Skill count:** 76 builders / 76 reviewers / 100% paired (incl. 2 alias pairings per docs/PAIRING_ALIASES.md)
+**Open issues:** 7 (#43–#49; #44 and #47 have DoD met and await human close)
+**Notes:** Judgement call: the task says "create one GitHub issue per target", but #43/#45/#46 already have open weekly-target issues from W30 — duplicating them would pollute the tracker, so the carried targets link their existing issues and only the two new targets got new issues (#48, #49). New-target selection followed the W30 plan's own W31 candidates list (sotif, program-mgmt) which also matches least-recently-touched (both domains 🟡 since the May import, never polished). Did not re-target #44/#47 since their DoD is met. Both needed domain labels (sotif, program-mgmt) already existed. Environment note: the locked-clone problem persists — /tmp/automotive-work/repo is unremovable (permission denied on every file), so this run used /tmp/auto-work-20260727; dated workdirs remain the norm. STATUS counts unchanged from yesterday: 8 fresh / 68 stale / 0 orphans.
+**Follow-ups:**
+- Tue POLISH: take #43 (cs-architecture reader rewrite) with a real cs-concept fixture; #45 next.
+- Thu/Fri: #48 or #49 if the carried trio clears early.
+- Human: close #44/#47; Publish v2026.07.W29 + v2026.07.W30; reviewer-stub and freshness-rule decisions still open.
+- Standing: vanished-issues pattern #33–#42 still unexplained.
