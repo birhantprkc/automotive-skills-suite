@@ -1,6 +1,6 @@
 # STATUS
 
-_Regenerated 2026-07-27 by autonomous daily run (PLAN). Alias pairings per docs/PAIRING_ALIASES.md._
+_Regenerated 2026-07-28 by autonomous daily run (POLISH). Alias pairings per docs/PAIRING_ALIASES.md._
 
 | Builder | Domain | Paired Reviewer | Last Touched | Flag |
 |---|---|---|---|---|
@@ -10,7 +10,7 @@ _Regenerated 2026-07-27 by autonomous daily run (PLAN). Alias pairings per docs/
 | apqp-plan-builder.skill | quality | apqp-plan-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | arxml-system-builder.skill | comms | arxml-system-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | aspice-assessment-builder.skill | aspice | aspice-assessment-checklist-reviewer.skill | 2026-06-25 | 🟡 |
-| aspice-gap-analysis-builder.skill | aspice | aspice-gap-analysis-checklist-reviewer.skill | 2026-05-01 | 🟡 |
+| aspice-gap-analysis-builder.skill | aspice | aspice-gap-analysis-checklist-reviewer.skill | 2026-07-28 | 🟢 |
 | aspice-improvement-plan-builder.skill | aspice | aspice-improvement-plan-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | aspice-process-evidence-builder.skill | aspice | aspice-process-evidence-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | automotive-ethernet-builder.skill | comms | automotive-ethernet-checklist-reviewer.skill | 2026-05-02 | 🟡 |
@@ -84,7 +84,7 @@ _Regenerated 2026-07-27 by autonomous daily run (PLAN). Alias pairings per docs/
 ## Summary
 
 - Builders: 76 · Reviewers: 76 · Paired: 76 (100%, incl. 2 alias pairings)
-- 🟢 Healthy (paired, touched ≤30d): 8
-- 🟡 Stale (30+ days): 68
+- 🟢 Healthy (paired, touched ≤30d): 9
+- 🟡 Stale (30+ days): 67
 - 🔴 Orphan (no reviewer): 0
 - Note: 🟡 wave reflects May bulk import; freshness-by-polish-log rule change still awaiting human sign-off (see W30 plan).
