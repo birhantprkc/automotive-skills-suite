@@ -1039,3 +1039,21 @@ Standout finding is non-DoD and more impactful than the trigger gaps: the SKILL.
 - #43 still unstarted and is the largest open item; consider giving it a dedicated run rather than a Tuesday slot.
 - Human: close #44/#47 (DoD met); Publish v2026.07.W29 + v2026.07.W30; reviewer-side example stubs decision (07-24) and freshness-by-polish-log STATUS rule still open.
 - Standing: vanished-issues pattern #33–#42 still unexplained.
+
+## 2026-07-30 (autonomous run, POLISH)
+
+**Mode:** POLISH
+**Action:** aspice-improvement-plan-builder — the second half of #45's ignored-arg defect fixed and shipped: `gap_analysis.xlsx` argument removed from the real signature, legacy 3-arg form kept working with a stderr warning, dead `load_workbook` import dropped, SKILL.md Steps 1/5 and tab 02 reworded to match actual behavior; archive re-zipped and re-verified.
+**Files touched:** skills/aspice-improvement-plan-builder.skill, docs/skill-polish-log/aspice-improvement-plan-builder.md, STATUS.md, docs/AUTONOMOUS_LOG.md
+**Tests:** N/A (no test suite in this repo yet) — manual smoke: py_compile clean, 2-arg form exit 0 / 11 tabs, legacy 3-arg form exit 0 + WARNING, bad arg count exit 1, fresh unzip regenerates 11 tabs, reviewer probe unchanged (initiative_rows 1, owners/budget/roadmap present), NUL scan clean, max sheet name 21 chars.
+**Skill count:** 76 builders / 76 reviewers / 100% paired (incl. 2 alias pairings per docs/PAIRING_ALIASES.md)
+**Open issues:** 7 (#43–#49; #44 and #47 have DoD met and await human close)
+**Notes:** Wednesday 07-29 produced no commit — the newest commit on clone was Tuesday's 67c9072 — so the run appears to have been skipped rather than to have failed mid-way (working tree was clean, no stray branches or tags). This run therefore took the Wednesday follow-up verbatim rather than jumping ahead to the Thursday item. Target selection again followed the task file's own priority order (`skill-bug` first) over the W31 plan's day assignments: #45 is still the only open `skill-bug` with work remaining. The fix is a deliberate copy of the pattern shipped on 07-28 for the sibling builder — same defect class, same "make it honest" resolution, same back-compat shim — which keeps the two ASPICE CLIs consistent with each other, worth more here than bespoke handling. Reviewer-independence was re-verified before touching the signature: the paired probe takes only the produced workbook. Scaffold tabs 04–09 stay untouched; that work is a cross-builder schema change and still blocked on the input-driven-vs-fill-in-template decision first raised 07-15 and re-raised 07-28 — this is now the single thing standing between #45 and a clean close, and it needs a human answer. STATUS regenerated after the commit and folded in with `--amend` (the practice adopted 07-28) so the polished skill reads 2026-07-30 🟢 rather than lagging a day. Environment note: `/tmp/automotive-work/repo` was removable this run — the locked-clone problem that forced dated workdirs on 07-26/27/28 did not recur, so the task file's canonical path worked as written.
+**Follow-ups:**
+- Fri DOCS: W31 changelog roll; three polish commits this week (gap-analysis, improvement-plan, plus whatever Friday adds) need example-stub coverage checks.
+- Next POLISH: aspice-process-evidence-builder is the last of the #45 trio, but its ignored-arg defect does NOT exist (its `<input.json>` is genuinely consumed) — its only finding is the scaffold-tab one, so it is blocked on the same decision. Suggest #48 (sotif-analysis-builder) instead as the next unblocked target.
+- Decision needed (blocks full #45 close): are scaffold tabs (Roadmap, Resources, Risks, KPIs, Communication, Pilot, plus the process-evidence 06/07/08 set) input-driven or intentional fill-in templates? One answer covers all three builders.
+- #43 (cs-architecture reader rewrite) still unstarted and still the largest open item; it wants a dedicated run with a real cs-concept fixture.
+- Human: close #44/#47 (DoD met); Publish v2026.07.W29 + v2026.07.W30; reviewer-side example stubs decision (07-24) and freshness-by-polish-log STATUS rule still open.
+- Standing: vanished-issues pattern #33–#42 still unexplained.
+- Watch: whether 07-29's skipped run is a one-off or the scheduler is dropping days.
