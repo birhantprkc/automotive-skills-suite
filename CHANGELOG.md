@@ -6,7 +6,15 @@ from `[Unreleased]` into a dated section at each weekly release.
 
 ## [Unreleased]
 
-_Accumulating since v2026.07.W30 (2026-07-25). Ships at the next Saturday RELEASE run._
+_W31 (2026-07-27 → ). Accumulating since v2026.07.W30 (2026-07-25). Ships at the next Saturday RELEASE run._
+
+### Polish
+- **aspice-gap-analysis-builder** — W31 target (Tue 2026-07-28, #45): the required-but-never-read `assessment.xlsx` CLI arg removed and the docs made honest about what the generator actually consumes (`67c9072`)
+- **aspice-improvement-plan-builder** — W31 target (Thu 2026-07-30, #45): same ignored-arg class — the unread `gap_analysis.xlsx` arg removed, docs corrected to match behaviour (`299cdad`)
+
+### Docs
+- W31 weekly plan published (Mon 2026-07-27) — targets: cs-concept→cs-architecture reader rewrite (#43, carried), ASPICE ignored-arg/scaffold wiring (#45, carried), repo-wide chain-contract audit (#46, carried), sotif-analysis first pass (#48, new), safety-program-risk-register first pass (#49, new) (`57238bf`)
+- W31 DOCS roll (Fri 2026-07-31): `[Unreleased]` updated with W31 entries; 2 reviewer-side example stubs added for the paired reviewers of skills touched this week; STATUS regenerated (this commit)
 
 ## [v2026.07.W30] — 2026-07-25
 

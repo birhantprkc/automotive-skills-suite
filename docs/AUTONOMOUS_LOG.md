@@ -1057,3 +1057,19 @@ Standout finding is non-DoD and more impactful than the trigger gaps: the SKILL.
 - Human: close #44/#47 (DoD met); Publish v2026.07.W29 + v2026.07.W30; reviewer-side example stubs decision (07-24) and freshness-by-polish-log STATUS rule still open.
 - Standing: vanished-issues pattern #33–#42 still unexplained.
 - Watch: whether 07-29's skipped run is a one-off or the scheduler is dropping days.
+
+## 2026-07-31 (autonomous run, DOCS)
+
+**Mode:** DOCS
+**Action:** W31 CHANGELOG roll into `[Unreleased]`, 2 reviewer-side example stubs, STATUS regenerated.
+**Files touched:** STATUS.md, CHANGELOG.md, examples/aspice-gap-analysis-checklist-reviewer/README.md, examples/aspice-improvement-plan-checklist-reviewer/README.md, docs/AUTONOMOUS_LOG.md
+**Tests:** N/A (no test suite in this repo yet)
+**Skill count:** 76 builders / 76 reviewers / 100% paired (incl. 2 alias pairings per docs/PAIRING_ALIASES.md)
+**Open issues:** 7 (#43, #44, #45, #46, #47, #48, #49)
+**Notes:** Quiet-ish week — only two POLISH commits landed (Tue #45 gap-analysis, Thu #45 improvement-plan); the Wednesday 2026-07-29 run left no commit, which breaks the always-commit invariant and is worth a human look. Both W31-touched builders already had `examples/` stubs, so the touched-this-week rule produced nothing on the builder side; following the W30 precedent of reviewer-side stubs, stubs were created for the two paired reviewers instead. No new skills were added, so the README skill table needed no rows. STATUS is unchanged apart from the regeneration header: still 10 🟢 / 66 🟡 / 0 🔴. The environment also hit a stale-permissions collision on the old `/tmp/automotive-work` clone path; this run used a timestamped work directory instead — worth adopting permanently.
+**Follow-ups:**
+- Investigate the missing Wed 2026-07-29 commit (run may not have fired).
+- #45 is two-thirds done — `aspice-process-evidence-builder` is the remaining leg for a Tue/Wed slot.
+- #43 (cs-concept→cs-architecture reader rewrite) still untouched in W31 and is the largest carried item; it should get the first POLISH slot next week.
+- Human standing items unchanged: close #44/#47 (DoD met), publish the v2026.07.W29 / W30 tags, decide the freshness-by-polish-log STATUS rule.
+- Saturday RELEASE run has 3 commits this week plus today's — a real (small) release, not a quiet week.
