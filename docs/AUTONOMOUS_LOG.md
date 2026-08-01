@@ -1089,3 +1089,10 @@ Standout finding is non-DoD and more impactful than the trigger gaps: the SKILL.
 - Mon PLAN: #43 (cs-concept→cs-architecture reader rewrite) deserves the first slot — untouched two weeks running and the largest open item. Carry #46 (chain-contract audit), #48 (sotif), #49 (program-mgmt).
 - Fix the task file's hardcoded `/tmp/automotive-work` path; use a dated workdir and never reuse `/tmp` script names.
 - Still unexplained: Wed 07-29 missing commit; vanished issues #33–#42.
+
+## 2026-08-01 (autonomous run, MONTHLY-KPI)
+
+**Action:** Generated docs/monthly/2026-07.md
+**Velocity:** 26 commits, 17 skill archives touched (14 of them in one batch NUL-strip commit), 3 `v2026.07.*` tags plus `v2026.08.W31` covering the straddling week
+**Coverage:** 100.0% paired (76/76), 34.2% with examples/ (26/76, up from 18.4%)
+**Notes:** July matched June on raw velocity but not on focus — real defect fixes (NUL-corrupt archives, ASPICE ignored-args) landed in the first three weeks, while the last two produced four skill-focused commits, no issue closures since 07-11, and an unexplained no-commit run on Wed 07-29. Domain flags: `diagnostics`, `mbse`, `sysml` and `v&v` are now at zero skill-focused commits two months running, and `sotif` newly hit zero despite being an explicit W30/W31 target.
