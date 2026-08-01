@@ -391,3 +391,47 @@ ISO week 30 (2026-07-20 → 2026-07-25). Weekly snapshot, 5 commits.
 ### Compare
 
 https://github.com/jherrodthomas/automotive-skills-suite/compare/v2026.07.W29...v2026.07.W30
+
+---
+
+## v2026.08.W31 — 2026-08-01
+
+ISO week 31 (2026-07-27 → 2026-08-01). Weekly snapshot, 4 commits. First tag to cross a month boundary — the week opened in July and closes in August, so the tag carries the `2026.08` month prefix of its release date while retaining ISO week 31.
+
+### Highlights
+
+- **ASPICE ignored-arg class cleared in two of three builders** (#45): `aspice-gap-analysis-builder` (Tue `67c9072`) and `aspice-improvement-plan-builder` (Thu `299cdad`) each dropped a required-but-never-read CLI argument, with docs corrected to describe what the generator actually consumes. Both fixes are deliberately identical in shape so the ASPICE CLIs stay consistent with each other.
+- **#45 cannot close yet.** The third leg, `aspice-process-evidence-builder`, has no ignored-arg defect — its input is genuinely consumed. Its only remaining finding is the scaffold-tab question (are Roadmap / Resources / Risks / KPIs / Communication / Pilot tabs input-driven or intentional fill-in templates?), which is a cross-builder schema decision first raised 2026-07-15 and still awaiting a human answer.
+- **Thin week, honestly reported.** Wednesday 2026-07-29 produced no commit at all, breaking the always-commit invariant; the Friday DOCS run flagged it and the cause is still unknown. Two of the five W31 targets (#48 sotif, #49 program-mgmt — both first passes on never-polished domains) were never started, and #43 (the largest carried item) remains untouched for a second week.
+
+### Changes this week
+
+**plan**
+- `57238bf` auto(plan): W31 targets — carry cs chain, aspice, audit; add sotif, program-mgmt
+
+**polish**
+- `67c9072` auto(polish): aspice-gap-analysis ignored assessment arg removed, docs made honest
+- `299cdad` auto(polish): aspice-improvement-plan ignored gap-analysis arg removed, docs made honest
+
+**docs**
+- `e749617` auto(docs): W31 changelog roll, 2 reviewer example stubs, STATUS regen
+
+**release** _(this snapshot commit)_
+- STATUS.md regenerated (76/76 paired, 10 fresh / 66 stale / 0 orphan — unchanged from Friday apart from the header)
+- RELEASES.md appended with this W31 section
+- CHANGELOG.md `[Unreleased]` rolled into a dated `[v2026.08.W31]` section
+- `docs/AUTONOMOUS_LOG.md` updated with the RELEASE-mode entry
+
+### Skills inventory
+
+- Builders: **76** · Reviewers: **76** · Paired ratio: **100.0%** (76/76, 2 via docs/PAIRING_ALIASES.md)
+- Freshness: 10 🟢 · 66 🟡 · 0 🔴
+- Domain spread: safety 11, other 9, comms 8, cyber 6, autosar 5, diagnostics 5, program-mgmt 5, quality 5, v&v 5, aspice 4, sysml 4, calibration 3, mbse 3, sotif 3
+
+### Open issues at snapshot
+
+7 open — #43, #44, #45, #46, #47, #48, #49. #44 and #47 have met their definition of done and are waiting on a human to close them (the run never closes issues autonomously).
+
+### Compare
+
+https://github.com/jherrodthomas/automotive-skills-suite/compare/v2026.07.W30...v2026.08.W31

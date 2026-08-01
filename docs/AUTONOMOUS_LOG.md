@@ -1073,3 +1073,19 @@ Standout finding is non-DoD and more impactful than the trigger gaps: the SKILL.
 - #43 (cs-concept→cs-architecture reader rewrite) still untouched in W31 and is the largest carried item; it should get the first POLISH slot next week.
 - Human standing items unchanged: close #44/#47 (DoD met), publish the v2026.07.W29 / W30 tags, decide the freshness-by-polish-log STATUS rule.
 - Saturday RELEASE run has 3 commits this week plus today's — a real (small) release, not a quiet week.
+
+## 2026-08-01 (autonomous run, RELEASE)
+
+**Mode:** RELEASE
+**Action:** Weekly snapshot `v2026.08.W31` cut — RELEASES.md section appended, CHANGELOG `[Unreleased]` rolled into a dated section, STATUS regenerated, lightweight tag pushed.
+**Files touched:** STATUS.md, RELEASES.md, CHANGELOG.md, docs/AUTONOMOUS_LOG.md
+**Tests:** N/A (no test suite in this repo yet)
+**Skill count:** 76 builders / 76 reviewers / 100% paired (incl. 2 alias pairings per docs/PAIRING_ALIASES.md)
+**Open issues:** 7 (#43, #44, #45, #46, #47, #48, #49)
+**Notes:** Four commits this week (plan, two polish, docs), so this is a real — if thin — release rather than a quiet week. Tag naming: this is the first snapshot to straddle a month boundary; W31 opened Mon 2026-07-27 in July and closes today in August. Kept the ISO week number and took the month prefix from the release date, giving `v2026.08.W31` — consistent with every prior tag being named for its Saturday, and unique against `git tag -l`. Flagging it here because a reader scanning tags will see W30 under `2026.07` and W31 under `2026.08` and may think a week was skipped; it was not. Substantively the week cleared two of the three legs of #45; the third (`aspice-process-evidence-builder`) has no ignored-arg defect and is blocked on the scaffold-tab decision, so #45 stays open. Two of five W31 targets (#48, #49) were never started and #43 went untouched a second week — the Wednesday 07-29 no-commit gap is the direct cause of roughly one lost polish slot and still has no explanation. Environment: the `/tmp/automotive-work` path was again unusable (stale root-owned files from a prior run, `rm -rf` denied), so this run used a timestamped work directory. That is now three runs in four hitting it — the task file's hardcoded path should be changed to a dated directory. Also worth knowing: a leftover `/tmp/gen_status.py` from an earlier run was not overwritable and silently executed instead of this run's generator, producing a wrong STATUS (97% paired, 2 orphans — it does not honor the alias registry). Caught via `git diff` and reverted before commit; scripts are now written inside the dated workdir. No GitHub Release object was published — the human clicks Publish after reviewing RELEASES.md.
+**Follow-ups:**
+- Human: publish tags v2026.07.W29, v2026.07.W30, v2026.08.W31; close #44 and #47 (DoD met).
+- Human decision still blocking #45: are ASPICE scaffold tabs input-driven or intentional fill-in templates? One answer covers all three builders.
+- Mon PLAN: #43 (cs-concept→cs-architecture reader rewrite) deserves the first slot — untouched two weeks running and the largest open item. Carry #46 (chain-contract audit), #48 (sotif), #49 (program-mgmt).
+- Fix the task file's hardcoded `/tmp/automotive-work` path; use a dated workdir and never reuse `/tmp` script names.
+- Still unexplained: Wed 07-29 missing commit; vanished issues #33–#42.

@@ -6,7 +6,11 @@ from `[Unreleased]` into a dated section at each weekly release.
 
 ## [Unreleased]
 
-_W31 (2026-07-27 → ). Accumulating since v2026.07.W30 (2026-07-25). Ships at the next Saturday RELEASE run._
+_W32 (2026-08-03 → ). Accumulating since v2026.08.W31 (2026-08-01). Ships at the next Saturday RELEASE run._
+
+## [v2026.08.W31] — 2026-08-01
+
+_W31 (2026-07-27 → 2026-08-01). Accumulating since v2026.07.W30 (2026-07-25). Shipped by the Saturday RELEASE run (2026-08-01)._
 
 ### Polish
 - **aspice-gap-analysis-builder** — W31 target (Tue 2026-07-28, #45): the required-but-never-read `assessment.xlsx` CLI arg removed and the docs made honest about what the generator actually consumes (`67c9072`)
@@ -14,7 +18,13 @@ _W31 (2026-07-27 → ). Accumulating since v2026.07.W30 (2026-07-25). Ships at t
 
 ### Docs
 - W31 weekly plan published (Mon 2026-07-27) — targets: cs-concept→cs-architecture reader rewrite (#43, carried), ASPICE ignored-arg/scaffold wiring (#45, carried), repo-wide chain-contract audit (#46, carried), sotif-analysis first pass (#48, new), safety-program-risk-register first pass (#49, new) (`57238bf`)
-- W31 DOCS roll (Fri 2026-07-31): `[Unreleased]` updated with W31 entries; 2 reviewer-side example stubs added for the paired reviewers of skills touched this week; STATUS regenerated (this commit)
+- W31 DOCS roll (Fri 2026-07-31): `[Unreleased]` updated with W31 entries; 2 reviewer-side example stubs added for the paired reviewers of skills touched this week; STATUS regenerated (`e749617`)
+
+### Release _(this snapshot commit)_
+- STATUS.md regenerated (76/76 paired, 10 fresh / 66 stale / 0 orphan)
+- RELEASES.md appended with the v2026.08.W31 section
+- CHANGELOG `[Unreleased]` rolled into this dated section
+- `docs/AUTONOMOUS_LOG.md` updated with the RELEASE-mode entry
 
 ## [v2026.07.W30] — 2026-07-25
 
