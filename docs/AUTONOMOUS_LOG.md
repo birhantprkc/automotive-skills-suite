@@ -1096,3 +1096,18 @@ Standout finding is non-DoD and more impactful than the trigger gaps: the SKILL.
 **Velocity:** 26 commits, 17 skill archives touched (14 of them in one batch NUL-strip commit), 3 `v2026.07.*` tags plus `v2026.08.W31` covering the straddling week
 **Coverage:** 100.0% paired (76/76), 34.2% with examples/ (26/76, up from 18.4%)
 **Notes:** July matched June on raw velocity but not on focus — real defect fixes (NUL-corrupt archives, ASPICE ignored-args) landed in the first three weeks, while the last two produced four skill-focused commits, no issue closures since 07-11, and an unexplained no-commit run on Wed 07-29. Domain flags: `diagnostics`, `mbse`, `sysml` and `v&v` are now at zero skill-focused commits two months running, and `sotif` newly hit zero despite being an explicit W30/W31 target.
+
+## 2026-08-02 (autonomous run, TRIAGE)
+
+**Mode:** TRIAGE
+**Action:** Triaged 7 open issues (1 type label added, 2 flagged for human triage), regenerated STATUS.md.
+**Files touched:** STATUS.md, docs/AUTONOMOUS_LOG.md
+**Tests:** N/A (no test suite in this repo yet)
+**Skill count:** 76 builders / 76 reviewers / 100% paired (incl. 2 alias pairings)
+**Open issues:** 7 (#43–#49)
+**Notes:** Type-label coverage was already good — #43/#46 carry `chain-break`, #44/#45 carry `skill-bug`, all seven carry a domain label. Only #47 ("Polish a2l-builder") lacked a type label; the completed work on it was a genuine axis-points crash fix (commit 661c4bb), so `skill-bug` was applied at high confidence. #48 and #49 are open-ended "first pass polish" targets with no defect identified yet — none of the seven type labels fits above the 80% bar, so they are recorded here as **needs human triage** rather than guessed at. No issue has been quiet 30+ days (oldest update 2026-07-20), so no dormancy comments were posted. Two observations for the human: (a) #43, #44, #45 and #47 all appear to have been resolved by commits in W30/W31 but remain open — worth a human close-out sweep; (b) the label taxonomy carries near-duplicates `vv` and `v-and-v`, plus a legacy `bug`/`documentation` pair alongside `skill-bug`/`docs` — consolidating would make future auto-triage cleaner.
+**Follow-ups:**
+- Human: close-out sweep on #43, #44, #45, #47 — work appears done, issues still open.
+- Human: decide on label consolidation (`vv` vs `v-and-v`; retire legacy `bug`/`documentation`).
+- Next run: define a type label (or a `polish` label) that fits open-ended polish targets like #48/#49, so they stop falling through triage.
+- Infra: the STATUS generator is rebuilt in /tmp each run and hardcodes its own date stamp; consider committing it as `tools/gen_status.py` so the date is derived, not typed.
