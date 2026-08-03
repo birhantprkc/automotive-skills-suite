@@ -1,6 +1,6 @@
 # STATUS
 
-_Regenerated 2026-08-02 by autonomous daily run (TRIAGE). Alias pairings per docs/PAIRING_ALIASES.md._
+_Regenerated 2026-08-03 by autonomous daily run (PLAN). Alias pairings per docs/PAIRING_ALIASES.md._
 
 | Builder | Domain | Paired Reviewer | Last Touched | Flag |
 |---|---|---|---|---|
@@ -87,4 +87,4 @@ _Regenerated 2026-08-02 by autonomous daily run (TRIAGE). Alias pairings per doc
 - 🟢 Healthy (paired, touched ≤30d): 10
 - 🟡 Stale (30+ days): 66
 - 🔴 Orphan (no reviewer): 0
-- Note: 🟡 wave reflects May bulk import; freshness-by-polish-log rule change still awaiting human sign-off (see W30 plan).
+- Note: 🟡 wave reflects May bulk import; freshness-by-polish-log STATUS rule change still awaiting human sign-off (see W30/W31 plans).

@@ -1111,3 +1111,20 @@ Standout finding is non-DoD and more impactful than the trigger gaps: the SKILL.
 - Human: decide on label consolidation (`vv` vs `v-and-v`; retire legacy `bug`/`documentation`).
 - Next run: define a type label (or a `polish` label) that fits open-ended polish targets like #48/#49, so they stop falling through triage.
 - Infra: the STATUS generator is rebuilt in /tmp each run and hardcodes its own date stamp; consider committing it as `tools/gen_status.py` so the date is derived, not typed.
+
+## 2026-08-03 (autonomous run, PLAN)
+
+**Mode:** PLAN
+**Action:** Wrote docs/weekly/WEEK-2026-W32.md carrying all five open weekly-target issues; created no new issues (deliberate WIP decision); regenerated STATUS.md.
+**Files touched:** docs/weekly/WEEK-2026-W32.md (new), STATUS.md, docs/AUTONOMOUS_LOG.md
+**Tests:** N/A (no test suite in this repo yet)
+**Skill count:** 76 builders / 76 reviewers / 100% paired (2 alias pairings) — green 10, yellow 66, red 0
+**Open issues:** 7 (5 weekly-target carried: #43 #45 #46 #48 #49; #44 and #47 have DoD met and await human close)
+**Notes:** The judgement call this run was to create zero new GitHub issues. The PLAN spec says pick 3-5 targets prioritized by open-issue references first, and there are exactly five open weekly-target issues with unmet definitions of done — they fill every slot on their own. Adding sixth and seventh targets from the neglected diagnostics/autosar/mbse/sysml/v&v domains would have made the plan look better-spread while guaranteeing more carry-over, since only three POLISH days exist against five targets. The domain-spread check is therefore recorded as a **miss** rather than papered over: W32 repeats W31's spread exactly, and the five untouched domains have now been unworked since W27. #43 has now carried three weeks running and is the single item most likely to keep slipping — it needs a real cs-concept output as a fixture, which is why it is slotted Wednesday rather than Tuesday. STATUS content is byte-identical to 08-02 apart from the header, confirming no skill archive changed last week.
+**Follow-ups:**
+- Tue: #45 (aspice-process-evidence-builder) — smallest remaining target, closes an issue outright.
+- Wed: #43 (cs-architecture reader rewrite) — largest, needs fixture; do not start it late in the week again.
+- Thu: #48 (sotif-analysis-builder) first pass.
+- If any target closes early, spend the freed slot on cdd-builder (diagnostics, 2026-05-02) per the W32 spread note.
+- W33 PLAN should cut rather than carry if the queue is still five deep.
+- Human: close #44/#47, publish tags v2026.07.W29 / v2026.07.W30 / v2026.08.W31, decide the freshness-by-polish-log STATUS rule.
