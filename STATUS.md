@@ -1,6 +1,6 @@
 # STATUS
 
-_Regenerated 2026-08-03 by autonomous daily run (PLAN). Alias pairings per docs/PAIRING_ALIASES.md._
+_Regenerated 2026-08-04 by autonomous daily run (POLISH). Alias pairings per docs/PAIRING_ALIASES.md._
 
 | Builder | Domain | Paired Reviewer | Last Touched | Flag |
 |---|---|---|---|---|
@@ -12,7 +12,7 @@ _Regenerated 2026-08-03 by autonomous daily run (PLAN). Alias pairings per docs/
 | aspice-assessment-builder.skill | aspice | aspice-assessment-checklist-reviewer.skill | 2026-06-25 | 🟡 |
 | aspice-gap-analysis-builder.skill | aspice | aspice-gap-analysis-checklist-reviewer.skill | 2026-07-28 | 🟢 |
 | aspice-improvement-plan-builder.skill | aspice | aspice-improvement-plan-checklist-reviewer.skill | 2026-07-30 | 🟢 |
-| aspice-process-evidence-builder.skill | aspice | aspice-process-evidence-checklist-reviewer.skill | 2026-05-01 | 🟡 |
+| aspice-process-evidence-builder.skill | aspice | aspice-process-evidence-checklist-reviewer.skill | 2026-08-04 | 🟢 |
 | automotive-ethernet-builder.skill | comms | automotive-ethernet-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | autosar-adaptive-app-builder.skill | autosar | autosar-adaptive-app-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | autosar-bsw-config-builder.skill | autosar | autosar-bsw-config-checklist-reviewer.skill | 2026-05-02 | 🟡 |
@@ -84,7 +84,7 @@ _Regenerated 2026-08-03 by autonomous daily run (PLAN). Alias pairings per docs/
 ## Summary
 
 - Builders: 76 · Reviewers: 76 · Paired: 76 (100%, incl. 2 alias pairings)
-- 🟢 Healthy (paired, touched ≤30d): 10
-- 🟡 Stale (30+ days): 66
+- 🟢 Healthy (paired, touched ≤30d): 11
+- 🟡 Stale (30+ days): 65
 - 🔴 Orphan (no reviewer): 0
 - Note: 🟡 wave reflects May bulk import; freshness-by-polish-log STATUS rule change still awaiting human sign-off (see W30/W31 plans).

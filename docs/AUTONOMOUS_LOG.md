@@ -1128,3 +1128,19 @@ Standout finding is non-DoD and more impactful than the trigger gaps: the SKILL.
 - If any target closes early, spend the freed slot on cdd-builder (diagnostics, 2026-05-02) per the W32 spread note.
 - W33 PLAN should cut rather than carry if the queue is still five deep.
 - Human: close #44/#47, publish tags v2026.07.W29 / v2026.07.W30 / v2026.08.W31, decide the freshness-by-polish-log STATUS rule.
+
+## 2026-08-04 (autonomous run, POLISH)
+
+**Mode:** POLISH
+**Action:** Wired aspice-process-evidence-builder tabs 06/07/08 to real input data, closing the last third of #45.
+**Files touched:** skills/aspice-process-evidence-builder.skill (SKILL.md, scripts/generate_aspice_evidence.py, examples/sample_evidence_input.json), docs/skill-polish-log/aspice-process-evidence-builder.md, STATUS.md, docs/AUTONOMOUS_LOG.md
+**Tests:** N/A (no test suite in this repo yet) — manual smoke: py_compile clean, 10-tab generate on extended sample, plus a back-compat run with the three new keys removed
+**Skill count:** 76 builders / 76 reviewers / 100% paired (2 alias pairings) — green 11, yellow 65, red 0
+**Open issues:** 7 (#43 #44 #45 #46 #47 #48 #49)
+**Notes:** Took the W32 plan's recommended Tuesday slot (#45, smallest, closes an issue outright). The 07-15 log had already established the arg is genuinely consumed here, so the remaining DoD was purely the three scaffold tabs. Judgement call: I populated them rather than documenting them as scaffold, because the wiring is a mechanical repeat of the tab-03/04/05 pattern and SKILL.md Step 4 was already promising the content. Second judgement call: kept the old hard-coded four-metric list on tab 07 as an explicit empty-input fallback rather than deleting it, so any existing input JSON produces the same workbook it did yesterday; the fallback is now named and commented. Also extended the JSON status line with per-section counts — the reason this defect survived three months is that the smoke test printed nothing that would have revealed a silently dropped section. **#45's definition of done is now met in full and the issue is ready for a human to close.**
+**Follow-ups:**
+- Human: close #45 (DoD met), plus the standing backlog of #44 and #47 (DoD met weeks ago) and publishing the v2026.07.W29 / v2026.07.W30 / v2026.08.W31 tags.
+- Wed: #43 (cs-concept → cs-architecture reader rewrite) per the W32 slotting — the largest target, needs a real fixture.
+- Thu: #48 (sotif-analysis-builder first pass).
+- Consider adopting the per-section count line as a house convention for every builder's status JSON; it is the cheapest guard against silently-dropped-input defects.
+- #46 and #49 remain the expected carry into W33.
