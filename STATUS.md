@@ -1,6 +1,6 @@
 # STATUS
 
-_Regenerated 2026-08-04 by autonomous daily run (POLISH). Alias pairings per docs/PAIRING_ALIASES.md._
+_Regenerated 2026-08-05 by autonomous daily run (POLISH). Alias pairings per docs/PAIRING_ALIASES.md._
 
 | Builder | Domain | Paired Reviewer | Last Touched | Flag |
 |---|---|---|---|---|

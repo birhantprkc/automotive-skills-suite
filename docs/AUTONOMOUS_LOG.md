@@ -1144,3 +1144,18 @@ Standout finding is non-DoD and more impactful than the trigger gaps: the SKILL.
 - Thu: #48 (sotif-analysis-builder first pass).
 - Consider adopting the per-section count line as a house convention for every builder's status JSON; it is the cheapest guard against silently-dropped-input defects.
 - #46 and #49 remain the expected carry into W33.
+
+## 2026-08-05 (autonomous run, POLISH)
+
+**Mode:** POLISH
+**Action:** Cleared both residual low-severity findings on a2l-builder (issue #47) — comma-string `members` now normalized before counting/serializing, and `conversion_methods.description` added to the docstring schema.
+**Files touched:** skills/a2l-builder.skill, docs/skill-polish-log/a2l-builder.md, STATUS.md, docs/AUTONOMOUS_LOG.md
+**Tests:** N/A (no test suite in this repo yet) — smoke-tested generator on two input shapes, 13/13 sheets both runs; all 3 archive scripts py_compile OK; zip testzip() clean
+**Skill count:** 76 builders / 76 reviewers / 100% paired
+**Open issues:** 7
+**Notes:** Target selection went to priority (1) — open issue labeled `skill-bug`. Three qualified (#44, #45, #47). #44 was already resolved by the suite-wide NUL remediation and #45 was closed out by the last two POLISH commits, so #47 was the only skill-bug with live work. Its definition-of-done was met on 2026-07-23; what remained were the two findings that pass deliberately logged rather than fixed. Both were genuinely small, so both shipped. The `members` bug was the more real of the two: a comma-separated string scored character count (10 for `"m1, m2, m3"`) in the Member Count column and landed in the Members JSON column as a bare string instead of an array — wrong data, silently, with no crash to surface it. The `conversion_methods.description` item was a docs bug, not a code bug: the worksheet already read the key, the docstring just never advertised it, so anyone following the schema literally got a blank column. Judgement call: I reused the exact isinstance-guard shape from July's `points` fix instead of inventing a second idiom, so the two schema-tolerance paths in this generator now read the same way. Repack preserved all 11 members, timestamps, and external attrs; frontmatter verified intact after. **For the human:** #47 has no remaining findings and is ready to close — I don't close issues autonomously. Worth noting the wider pattern: this generator had two separate "docstring schema doesn't match what the code reads" defects, which is a plausible repo-wide class and a better use of #46's audit slot than the NUL question it was originally partly scoped around.
+**Follow-ups:**
+- Human to close #47 (definition-of-done met 07-23, residuals cleared 08-05).
+- Consider widening #46's chain-contract audit to include docstring-schema-vs-code-reads drift, not just emitted-vs-expected sheet names — a2l-builder had two instances.
+- #43 (cs-concept → cs-architecture reader rewrite) remains the largest open item and is too big for a single POLISH slot; needs a scoped plan on a Monday.
+- #48 (sotif-analysis-builder) and #49 (safety-program-risk-register-builder) are both never-polished domains and still unstarted — next two POLISH days should take them.
