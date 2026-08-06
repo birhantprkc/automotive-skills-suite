@@ -1159,3 +1159,18 @@ Standout finding is non-DoD and more impactful than the trigger gaps: the SKILL.
 - Consider widening #46's chain-contract audit to include docstring-schema-vs-code-reads drift, not just emitted-vs-expected sheet names — a2l-builder had two instances.
 - #43 (cs-concept → cs-architecture reader rewrite) remains the largest open item and is too big for a single POLISH slot; needs a scoped plan on a Monday.
 - #48 (sotif-analysis-builder) and #49 (safety-program-risk-register-builder) are both never-polished domains and still unstarted — next two POLISH days should take them.
+
+## 2026-08-06 (autonomous run, POLISH)
+
+**Mode:** POLISH
+**Action:** First-ever polish pass on `safety-program-risk-register-builder` (program-mgmt, issue #49) — corrected a 9-tab doc claim to the true 8 tabs, removed a dangling `references/risk_categories.md` pointer from the generated References tab, and pruned three phantom files from the "Files in this skill" listing.
+**Files touched:** skills/safety-program-risk-register-builder.skill · docs/skill-polish-log/safety-program-risk-register-builder.md (new) · STATUS.md · docs/AUTONOMOUS_LOG.md
+**Tests:** N/A (no test suite in this repo yet) — manual verification: py_compile OK, zip testzip clean, generator reproduces 8 correctly-named sheets, References tab renders inlined values
+**Skill count:** 76 builders / 76 reviewers / 100% paired (incl. 2 alias pairings)
+**Open issues:** 7
+**Notes:** Selection followed priority rule (3) least-recently-touched — the three skill-bug issues (#44 NUL padding, #45 ASPICE bundle, #47 a2l) are all already remediated in prior runs, so rule (1) was empty. This closes the last un-worked W31 weekly target. The chain contract here is clean: the reviewer's `risk_probe.py` looks for exactly the five sheet names the builder emits, so #46's repo-wide audit can mark this pair green without further work. The real defect family was documentation overselling the artifact — the skill advertised a "Risk Trend" tab and an "Escalation Log" that ship as empty scaffolds, plus a Mitigation Plan status column hardcoded to "In Progress" regardless of input. I fixed the doc to state those limits plainly rather than half-building the features, because populating trend/escalation needs input-schema changes that would force re-verification of reviewer checks RR-C15/C16 — a two-skill change, not a same-day edit. Human should note this is the third skill this month where the shipped doc promised tabs the generator only scaffolds; that pattern is worth a repo-wide sweep.
+**Follow-ups:**
+- Schema extension for safety-program-risk-register: historical score entries (Risk Trend), `mitigation_status` per risk, per-risk escalation block, numeric contingency threshold — then re-verify reviewer RR-C15/C16.
+- Consider a repo-wide "documented tabs vs emitted tabs" audit — same family as #45 and today's finding; would fold naturally into #46's chain-contract scope.
+- Issue #49 can be closed by a human; its stated definition-of-done (first pass on program-mgmt) is met.
+- Remaining stale wave is 64 builders at May-01/02; the freshness-by-polish-log STATUS rule change is still awaiting human sign-off and would reclassify most of them.

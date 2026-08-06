@@ -1,12 +1,12 @@
 # STATUS
 
-_Regenerated 2026-08-05 by autonomous daily run (POLISH). Alias pairings per docs/PAIRING_ALIASES.md._
+_Regenerated 2026-08-06 by autonomous daily run (POLISH). Alias pairings per docs/PAIRING_ALIASES.md._
 
 | Builder | Domain | Paired Reviewer | Last Touched | Flag |
 |---|---|---|---|---|
 | 5-why-builder.skill | other | 5-why-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | 8d-problem-solving-builder.skill | other | 8d-problem-solving-checklist-reviewer.skill | 2026-05-01 | 🟡 |
-| a2l-builder.skill | calibration | a2l-checklist-reviewer.skill | 2026-07-23 | 🟢 |
+| a2l-builder.skill | calibration | a2l-checklist-reviewer.skill | 2026-08-05 | 🟢 |
 | apqp-plan-builder.skill | quality | apqp-plan-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | arxml-system-builder.skill | comms | arxml-system-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | aspice-assessment-builder.skill | aspice | aspice-assessment-checklist-reviewer.skill | 2026-06-25 | 🟡 |
@@ -57,7 +57,7 @@ _Regenerated 2026-08-05 by autonomous daily run (POLISH). Alias pairings per doc
 | safety-case-builder.skill | safety | safety-case-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | safety-gate-review-builder.skill | program-mgmt | safety-gate-review-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | safety-plan-builder.skill | safety | safety-plan-checklist-reviewer.skill | 2026-05-01 | 🟡 |
-| safety-program-risk-register-builder.skill | program-mgmt | safety-program-risk-register-checklist-reviewer.skill | 2026-05-02 | 🟡 |
+| safety-program-risk-register-builder.skill | program-mgmt | safety-program-risk-register-checklist-reviewer.skill | 2026-08-06 | 🟢 |
 | secure-coding-guidelines-builder.skill | cyber | secure-coding-guidelines-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | sotif-analysis-builder.skill | sotif | sotif-analysis-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | sotif-validation-strategy-builder.skill | sotif | sotif-validation-strategy-checklist-reviewer.skill | 2026-05-01 | 🟡 |
@@ -84,7 +84,7 @@ _Regenerated 2026-08-05 by autonomous daily run (POLISH). Alias pairings per doc
 ## Summary
 
 - Builders: 76 · Reviewers: 76 · Paired: 76 (100%, incl. 2 alias pairings)
-- 🟢 Healthy (paired, touched ≤30d): 11
-- 🟡 Stale (30+ days): 65
+- 🟢 Healthy (paired, touched ≤30d): 12
+- 🟡 Stale (30+ days): 64
 - 🔴 Orphan (no reviewer): 0
 - Note: 🟡 wave reflects May bulk import; freshness-by-polish-log STATUS rule change still awaiting human sign-off (see W30/W31 plans).
