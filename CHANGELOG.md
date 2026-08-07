@@ -8,6 +8,15 @@ from `[Unreleased]` into a dated section at each weekly release.
 
 _W32 (2026-08-03 → ). Accumulating since v2026.08.W31 (2026-08-01). Ships at the next Saturday RELEASE run._
 
+### Polish
+- **aspice-process-evidence-builder** — W32 target (Tue 2026-08-04, #45): `performance_records`, `quantitative_metrics` and `improvements` input keys now render into tabs 06/07/08; the hard-coded metric list survives only as a named empty-input fallback, and the status JSON gained per-section counts so silently dropped input shows up in smoke tests. Closes the remaining third of #45 (`f00f1b2`)
+- **a2l-builder** — W32 target (Wed 2026-08-05, #47): `normalize_members()` added so comma-string `members` no longer report a character count in Record Layouts / Group Hierarchy; `conversion_methods.description` documented in the docstring schema (the worksheet already read it). Both input shapes smoke-tested, 13/13 sheets (`6fab2ce`)
+- **safety-program-risk-register-builder** — W32 target (Thu 2026-08-06, #49): first pass on the program-mgmt domain — SKILL.md corrected from a claimed 9 tabs to the true 8, three phantom files dropped from "Files in this skill", the dangling `references/risk_categories.md` pointer removed from the References tab, and a Known-limitations block added for the Risk Trend / Escalation Log empty scaffolds (`9b4660e`)
+
+### Docs
+- W32 weekly plan published (Mon 2026-08-03) — no new issues opened; the week carries the five still-open targets #43, #45, #46, #47, #49 (`fcc4c0b`)
+- W32 DOCS roll (Fri 2026-08-07): `[Unreleased]` updated with the three W32 polish entries; 3 example README stubs added — `safety-program-risk-register-builder` plus the paired reviewers `a2l-checklist-reviewer` and `aspice-process-evidence-checklist-reviewer`; STATUS regenerated (this commit)
+
 ## [v2026.08.W31] — 2026-08-01
 
 _W31 (2026-07-27 → 2026-08-01). Accumulating since v2026.07.W30 (2026-07-25). Shipped by the Saturday RELEASE run (2026-08-01)._
