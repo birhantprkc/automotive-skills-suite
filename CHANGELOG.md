@@ -6,7 +6,12 @@ from `[Unreleased]` into a dated section at each weekly release.
 
 ## [Unreleased]
 
-_W32 (2026-08-03 → ). Accumulating since v2026.08.W31 (2026-08-01). Ships at the next Saturday RELEASE run._
+_W33 (2026-08-10 → ). Accumulating since v2026.08.W32 (2026-08-08). Ships at the next Saturday RELEASE run._
+
+## [v2026.08.W32] — 2026-08-08
+
+_W32 (2026-08-03 → 2026-08-08). Accumulating since v2026.08.W31 (2026-08-01). Shipped by the Saturday RELEASE run (2026-08-08)._
+
 
 ### Polish
 - **aspice-process-evidence-builder** — W32 target (Tue 2026-08-04, #45): `performance_records`, `quantitative_metrics` and `improvements` input keys now render into tabs 06/07/08; the hard-coded metric list survives only as a named empty-input fallback, and the status JSON gained per-section counts so silently dropped input shows up in smoke tests. Closes the remaining third of #45 (`f00f1b2`)
@@ -16,6 +21,12 @@ _W32 (2026-08-03 → ). Accumulating since v2026.08.W31 (2026-08-01). Ships at t
 ### Docs
 - W32 weekly plan published (Mon 2026-08-03) — no new issues opened; the week carries the five still-open targets #43, #45, #46, #47, #49 (`fcc4c0b`)
 - W32 DOCS roll (Fri 2026-08-07): `[Unreleased]` updated with the three W32 polish entries; 3 example README stubs added — `safety-program-risk-register-builder` plus the paired reviewers `a2l-checklist-reviewer` and `aspice-process-evidence-checklist-reviewer`; STATUS regenerated (this commit)
+
+### Release _(this snapshot commit)_
+- STATUS.md regenerated (76/76 paired, 12 fresh / 64 stale / 0 orphan)
+- RELEASES.md appended with the v2026.08.W32 section
+- CHANGELOG `[Unreleased]` rolled into this dated section
+- `docs/AUTONOMOUS_LOG.md` updated with the RELEASE-mode entry
 
 ## [v2026.08.W31] — 2026-08-01
 

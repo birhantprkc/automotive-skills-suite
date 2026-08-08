@@ -1189,3 +1189,18 @@ Standout finding is non-DoD and more impactful than the trigger gaps: the SKILL.
 - 38 of 152 skills now have example stubs (25%); at ~3/week the touched-this-week rule will take another year to cover the repo. Worth deciding whether to batch-generate the rest or accept the slow drip — a human call, since batch stubs would be generated from SKILL.md alone with no smoke-test behind them.
 - Still open and unstarted: #48 (sotif-analysis-builder), the only never-polished domain left after yesterday's program-mgmt pass.
 - #43 still needs a scoped multi-day plan; carried for the third week.
+
+## 2026-08-08 (autonomous run, RELEASE)
+
+**Mode:** RELEASE
+**Action:** Weekly snapshot `v2026.08.W32` cut — RELEASES.md section appended, CHANGELOG `[Unreleased]` rolled into `## [v2026.08.W32]` with a fresh W33 accumulator, STATUS regenerated, lightweight tag created and pushed.
+**Files touched:** RELEASES.md · CHANGELOG.md · STATUS.md · docs/AUTONOMOUS_LOG.md · tag `v2026.08.W32`
+**Tests:** N/A (no test suite in this repo yet) — verification: `git tag -l` confirmed `v2026.08.W32` did not already exist; STATUS regen diff limited to the header date line, so the pairing/flag math reproduces yesterday's table exactly; `git status --short` inspected before commit to confirm no token-bearing file staged.
+**Skill count:** 76 builders / 76 reviewers / 100% paired (incl. 2 alias pairings)
+**Open issues:** 7
+**Notes:** Non-empty week — five commits since Monday, three of them real polish landings, so the release proceeded rather than journaling a quiet week. W32 is the first week since W30 to convert all three POLISH days into shipped changes. Judgement call on the tag: the documented rule says "W\<n\> = ISO week within current month", but every tag in the repo from v2026.05.W20 onward uses the plain ISO week number, so I followed the established convention and tagged `v2026.08.W32` rather than `v2026.08.W2`; changing the scheme mid-stream would break the sort order of ten existing tags. No GitHub Release object was published, per the standing rule — the human clicks Publish after reviewing RELEASES.md. Worth a human eye: the open-issue count is inflated. #44, #45 and #47 have all met their stated definition of done and remain open only because the autonomous run never closes issues; the real carry into W33 is three items (#43, #46, #48), not seven.
+**Follow-ups:**
+- Monday PLAN (W33): honest carry is #43, #46, #48. Per the W32 plan's own advice, cut rather than carry again if the queue stays deep — and the freed slots should go to `cdd-builder` (diagnostics) as the least-recently-touched builder in the longest-neglected domain.
+- Human actions queued: close #44, #45, #47; publish the v2026.07.W29, v2026.07.W30, v2026.08.W31 and v2026.08.W32 tags.
+- Still awaiting human sign-off: the freshness-by-polish-log STATUS rule (would reclassify most of the 64 stale builders), and the batch-vs-drip decision on example stubs (38/152, 25%).
+- #43 (cs-concept → cs-architecture reader rewrite) is now carried x4 and remains the single largest unstarted item; it needs a scoped multi-day plan or an explicit descope.

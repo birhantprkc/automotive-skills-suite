@@ -4,6 +4,54 @@ Weekly snapshots of `github.com/jherrodthomas/automotive-skills-suite`. Tags are
 
 ---
 
+## v2026.08.W32 — 2026-08-08
+
+ISO week 32 (2026-08-03 → 2026-08-08). Accumulating since `v2026.08.W31` (2026-08-01).
+
+### Highlights
+
+- Three real polish landings in three POLISH days — the first week since W30 to hit that rate: `aspice-process-evidence-builder` (input keys now actually render), `a2l-builder` (comma-string `members` no longer counted as characters), and `safety-program-risk-register-builder` (docs corrected from 9 claimed tabs to the true 8).
+- Two of the three closed out long-carried issues: #45 is now fully serviced (all three ASPICE thirds done) and #47's definition of done is met. Both are waiting on a human to click Close.
+- First-ever pass on the **program-mgmt** domain (#49) — the domain-spread gap flagged in the W32 plan narrowed by one. `diagnostics`, `autosar`, `mbse`, `sysml` and `v&v` remain untouched since the May import.
+- Inventory unchanged at 76 builder + 76 reviewer pairs, 100% paired.
+
+### Changes this week
+
+**plan**
+- `fcc4c0b` auto(plan): W32 carries five open targets, no new issues, STATUS regen
+
+**polish**
+- `f00f1b2` auto(polish): aspice-process-evidence tabs 06/07/08 wired to real input data
+- `6fab2ce` auto(polish): a2l-builder members normalization and conversion_methods schema doc fix
+- `9b4660e` auto(polish): safety-program-risk-register docs made honest, dangling reference removed
+
+**docs**
+- `cd6a29e` auto(docs): W32 changelog roll, three example stubs, STATUS regen
+
+**release** _(this snapshot commit)_
+- STATUS.md regenerated (76/76 paired, 12 fresh / 64 stale / 0 orphan)
+- RELEASES.md appended with this section
+- CHANGELOG `[Unreleased]` rolled into `## [v2026.08.W32]`
+- `docs/AUTONOMOUS_LOG.md` updated with the RELEASE-mode entry
+
+### Skills inventory
+
+- Builders: 76
+- Reviewers: 76
+- Paired: 76/76 (100.0%, incl. 2 alias pairings per `docs/PAIRING_ALIASES.md`)
+- Freshness: 🟢 12 touched ≤30d · 🟡 64 stale · 🔴 0 orphan
+- Domain spread: safety=11, other=9, comms=8, cyber=6, quality=5, autosar=5, diagnostics=5, program-mgmt=5, v&v=5, aspice=4, sysml=4, calibration=3, mbse=3, sotif=3
+
+### Open issues at snapshot
+
+7 open, all labeled `weekly-target`: #43, #45, #46, #47, #48, #49 — plus #44. **#44, #45 and #47 have met their definition of done and are only open because the autonomous run never closes issues.** Carrying into W33: #43 (cs-concept → cs-architecture reader rewrite, carried x4), #46 (repo-wide chain-contract audit, carried x4), #48 (sotif first pass, carried x2).
+
+### Compare
+
+https://github.com/jherrodthomas/automotive-skills-suite/compare/v2026.08.W31...v2026.08.W32
+
+---
+
 ## v2026.05.W20 — 2026-05-16
 
 ISO week 20 (2026-05-11 → 2026-05-16). First weekly snapshot of the autonomous run cadence.
