@@ -1,6 +1,6 @@
 # STATUS
 
-_Regenerated 2026-08-10 by autonomous daily run (PLAN). Alias pairings per docs/PAIRING_ALIASES.md._
+_Regenerated 2026-08-11 by autonomous daily run (POLISH). Alias pairings per docs/PAIRING_ALIASES.md._
 
 | Builder | Domain | Paired Reviewer | Last Touched | Flag |
 |---|---|---|---|---|
@@ -21,7 +21,7 @@ _Regenerated 2026-08-10 by autonomous daily run (PLAN). Alias pairings per docs/
 | autosar-swc-builder.skill | autosar | autosar-swc-checklist-reviewer.skill | 2026-05-21 | 🟡 |
 | bus-load-analysis-builder.skill | comms | bus-load-analysis-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | calibration-data-exchange-builder.skill | calibration | calibration-data-exchange-checklist-reviewer.skill | 2026-05-02 | 🟡 |
-| cdd-builder.skill | diagnostics | cdd-checklist-reviewer.skill | 2026-05-02 | 🟡 |
+| cdd-builder.skill | diagnostics | cdd-checklist-reviewer.skill | 2026-08-11 | 🟢 |
 | change-impact-analysis-builder.skill | program-mgmt | change-impact-analysis-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | communication-matrix-builder.skill | comms | communication-matrix-checklist-reviewer.skill | 2026-06-24 | 🟡 |
 | control-plan-builder.skill | quality | control-plan-checklist-reviewer.skill | 2026-06-18 | 🟡 |
@@ -59,7 +59,7 @@ _Regenerated 2026-08-10 by autonomous daily run (PLAN). Alias pairings per docs/
 | safety-plan-builder.skill | safety | safety-plan-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | safety-program-risk-register-builder.skill | program-mgmt | safety-program-risk-register-checklist-reviewer.skill | 2026-08-06 | 🟢 |
 | secure-coding-guidelines-builder.skill | cyber | secure-coding-guidelines-checklist-reviewer.skill | 2026-05-01 | 🟡 |
-| sotif-analysis-builder.skill | sotif | sotif-analysis-checklist-reviewer.skill | 2026-05-01 | 🟡 |
+| sotif-analysis-builder.skill | sotif | sotif-analysis-checklist-reviewer.skill | 2026-08-11 | 🟢 |
 | sotif-validation-strategy-builder.skill | sotif | sotif-validation-strategy-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | spc-chart-builder.skill | other | spc-chart-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | sw-arch-builder.skill | safety | sw-arch-checklist-reviewer.skill | 2026-05-01 | 🟡 |
@@ -84,7 +84,7 @@ _Regenerated 2026-08-10 by autonomous daily run (PLAN). Alias pairings per docs/
 ## Summary
 
 - Builders: 76 · Reviewers: 76 · Paired: 76 (100%, incl. 2 alias pairings)
-- 🟢 Healthy (paired, touched ≤30d): 12
-- 🟡 Stale (30+ days): 64
+- 🟢 Healthy (paired, touched ≤30d): 14
+- 🟡 Stale (30+ days): 62
 - 🔴 Orphan (no reviewer): 0
-- Note: 🟡 wave reflects May bulk import; freshness-by-polish-log STATUS rule change still awaiting human sign-off (see W30/W31 plans).
+- Note: 🟡 wave reflects May bulk import; freshness-by-polish-log STATUS rule change still awaiting human sign-off (see W30/W31 plans). Separately, `docs/sheet-name-length-audit.md` (new 2026-08-11) flags 9 skills emitting Excel-invalid sheet names — a quality signal this date-based table does not capture.
