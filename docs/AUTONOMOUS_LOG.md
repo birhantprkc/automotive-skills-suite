@@ -1251,3 +1251,18 @@ Standout finding is non-DoD and more impactful than the trigger gaps: the SKILL.
 - Standing lesson for POLISH days: **run the generator before declaring a builder clean.** The 2026-06-09 pass on this same SOTIF skill reviewed the source and called it healthy; the defect was one execution away.
 - `cdd-builder` has no `references/` content at all, unlike its domain siblings — ISO 14229-1 service semantics and CANdela authoring conventions are the obvious two. Content pass, not a polish day.
 - Wednesday: #43 (cs-concept → cs-architecture reader rewrite, carried x4 — full day or descope). Thursday: #46 chain-contract audit, which should now also fold in the sheet-name findings.
+
+## 2026-08-12 (autonomous run, POLISH)
+
+**Mode:** POLISH
+**Action:** Repaired the cs-concept → cs-architecture chain break (#43) by rewriting `cs_concept_reader.py` against the tab contract cs-concept-builder actually emits; regenerated STATUS.md.
+**Files touched:** skills/cs-architecture-builder.skill (scripts/cs_concept_reader.py rewritten, scripts/generate_cs_architecture.py echo headers, SKILL.md), docs/skill-polish-log/cs-architecture-builder.md, STATUS.md, docs/AUTONOMOUS_LOG.md
+**Tests:** N/A (no test suite in this repo yet) — verified by execution: old reader 0 CSRs / 0 CAL / 0 threats vs new reader 2 / 6 / 1 on a CS Concept built from cs-concept-builder's own tab builders; full generator run produced 12 tabs with a populated echo and allocation matrix; py_compile clean; repacked archive passes testzip().
+**Skill count:** 76 builders / 76 reviewers / 97% paired
+**Open issues:** 8
+**Notes:** Target selection followed priority order — the two remaining `skill-bug` issues (#45 ASPICE bundle, #47 a2l) are already fully addressed by earlier runs, and #44's NUL family is closed (today's suite-wide rescan found only the four known xlsx EOCD false positives, unchanged). That left #43, which also happens to be the least-recently-touched builder in the repo — untouched since the 2026-05-01 import. The bug was worse than a crash: every tab lookup sat behind an `if <name> in wb.sheetnames` guard, so three wrong tab names and a wrong title-page column pair produced an empty parse, a "success" exit code, and a CS Architecture with a blank CS Concept echo. Judgement call: I kept all legacy key names in the reader output so `generate_cs_architecture.py` needed no edits, and kept the old tab names as ordered fallbacks — the fix is additive, not a refactor. The only generator change was five header labels that were describing TARA levels for a column that carries CAL. #43 is ready to close but was left open per the no-autonomous-close rule.
+**Follow-ups:**
+- Human: review and close #43.
+- #46's chain-contract audit should grep every `*_reader.py` for the guarded-lookup pattern — #43 is almost certainly not the only instance of a reader silently agreeing with a tab name nobody emits.
+- cs-architecture-builder is one of two builders with no paired reviewer (🔴 in STATUS.md); worth a `new-skill` target on a future Monday.
+- Stale count is high (61 builders untouched >30d) against 13 healthy — the one-skill-per-day polish cadence cannot keep 76 builders inside a 30-day window. Consider whether the 🟡 threshold is the right signal or just permanent noise.
