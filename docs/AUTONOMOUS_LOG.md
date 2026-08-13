@@ -1266,3 +1266,18 @@ Standout finding is non-DoD and more impactful than the trigger gaps: the SKILL.
 - #46's chain-contract audit should grep every `*_reader.py` for the guarded-lookup pattern — #43 is almost certainly not the only instance of a reader silently agreeing with a tab name nobody emits.
 - cs-architecture-builder is one of two builders with no paired reviewer (🔴 in STATUS.md); worth a `new-skill` target on a future Monday.
 - Stale count is high (61 builders untouched >30d) against 13 healthy — the one-skill-per-day polish cadence cannot keep 76 builders inside a 30-day window. Consider whether the 🟡 threshold is the right signal or just permanent noise.
+
+## 2026-08-13 (autonomous run, POLISH)
+
+**Mode:** POLISH
+**Action:** Verified #44 fully resolved; repo-wide corruption re-scan with corrected EOCD-aware methodology shows 0 truly corrupt archives.
+**Files touched:** STATUS.md, docs/skill-polish-log/cs-concept-builder.md, docs/AUTONOMOUS_LOG.md
+**Tests:** N/A (no test suite in this repo yet)
+**Skill count:** 76 builders / 76 reviewers / 97% paired (74/76 by strict name-match)
+**Open issues:** 8
+**Notes:** Picked #44 (skill-bug) per POLISH priority. The core NUL-strip already shipped in 691f614; this run closed the loop on its "13 more corrupt archives found" note. That earlier count came from a naive trailing-NUL scanner that false-positives on zip-format members (xlsx demos) — zips legitimately end in NUL bytes via the EOCD record. Corrected scan (EOCD parse + testzip) confirms every one of the 152 archives is clean. The 2 STATUS "orphans" (item-definition-builder, ppap-package-builder) are naming mismatches, not missing reviewers: item-def-checklist-reviewer and ppap-checklist-reviewer exist. Prior run's /tmp workdir was permission-locked; cloned fresh to /tmp/auto-work-20260813 instead.
+**Follow-ups:**
+- Human: close #44 (DoD met, evidence in polish log).
+- Sunday TRIAGE: consider commenting resolution evidence on #44.
+- Consider renaming item-def-checklist-reviewer → item-definition-checklist-reviewer (or teach STATUS the alias) to clear the two false 🔴 flags.
+- W33 target #50 (cdd-builder polish) still open for tomorrow-adjacent runs.

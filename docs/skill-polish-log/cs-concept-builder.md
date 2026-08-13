@@ -357,3 +357,15 @@ that legitimately end in NUL bytes (zip-based: .xlsx, .docx, .pptx). Naive
 Severity: was **high** (8 skills shipped un-compilable generators/dashboards) → **resolved**.
 The May-01/02 bulk-import padding fault family is now fully remediated across the suite;
 #46's audit can drop the NUL question and focus on its original chain-contract scope.
+
+## 2026-08-13 — verification pass (POLISH)
+
+**What's good:** The NUL-strip from 691f614 held: `generate_cs_concept.py` inside the archive is byte-clean (15,753 bytes, zero NULs, syntax-valid). All 9 members extract cleanly.
+
+**Follow-up on "13 more corrupt archives":** Re-ran the repo-wide scan with a corrected methodology. The naive `rstrip(b'\x00')` scanner produces false positives on zip-format members: a zip's End-of-Central-Directory record legitimately ends with NUL bytes (offset high bytes + zero comment length). Corrected scan parses the EOCD and compares expected file end vs actual length.
+
+**Result:** 0 truly corrupt members across all 152 archives. The 4 residual flags (FSC_Checklist_demo.xlsx, HARA_Checklist_demo.xlsx, HARA_Checklist_demo_v2.xlsx, TSC_Checklist_demo.xlsx) are all valid xlsx files whose trailing NULs are structural — verified via EOCD parse + `zipfile.testzip()` passing on each.
+
+**Suggested edits:** None to the skill. Recommend a human close #44 — definition of done is met and the wider corruption concern is disproven.
+
+**Severity:** low (resolved)
