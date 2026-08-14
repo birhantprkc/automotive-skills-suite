@@ -8,6 +8,25 @@ from `[Unreleased]` into a dated section at each weekly release.
 
 _W33 (2026-08-10 → ). Accumulating since v2026.08.W32 (2026-08-08). Ships at the next Saturday RELEASE run._
 
+### Fixed
+- **STATUS pairing regression** — the Thursday run (`08cf363`) reported `74 strict-paired, 2 naming-mismatch orphans`, contradicting `docs/PAIRING_ALIASES.md`, which states that any STATUS regeneration MUST honor the alias table. Root cause is the one Monday's plan already flagged (`fbcf48e`): *"the STATUS generator is not version-controlled, so its fixes evaporate each run."* Each day re-derived the pairing logic inline, so the alias handling was rebuilt from scratch — and lost. Fixed at the root by committing `scripts/regen_status.py`, which **parses** the alias table out of `docs/PAIRING_ALIASES.md` instead of hard-coding it; a new alias row is now picked up with no code change. Back to 76/76 paired, 0 orphan (this commit)
+- **Two builders mis-domained as `safety`** — `msa-gage-rr-builder` and `spc-chart-builder` are Measurement System Analysis (Gage R&R) and SPC tooling, i.e. IATF 16949 quality, not ISO 26262 safety. Nine builders match none of the documented domain prefix rules and were being hand-assigned on each ad-hoc run; all nine are now pinned explicitly in `regen_status.py` so the label is stable, with these two corrected (this commit)
+
+### Docs
+- W33 weekly plan published (Mon 2026-08-10) — 4 targets: #48 stub tail, #43 reader rewrite, #46 audit, plus new issue #50 (`cdd-builder`, first diagnostics target since W30) (`fbcf48e`)
+- W33 DOCS roll (Fri 2026-08-14): 3 reviewer-side example stubs added for the paired reviewers of skills touched this week — `cdd-checklist-reviewer`, `cs-architecture-checklist-reviewer`, `sotif-analysis-checklist-reviewer`. Written against the actual archives rather than the SKILL.md prose, which surfaced two documentation drifts (below). STATUS regenerated (this commit)
+
+### Polish
+- **sotif-analysis-builder** — W33 target (Tue 2026-08-11, #48): tabs 03/07/09 ran 39/35/32 characters against Excel's hard 31-character limit; openpyxl warns but writes through, so shipped workbooks were malformed. Shortened and verified (12 tabs, 0 over-limit). Second-order fix: the reviewer's first-keyword-hit probe was reading tab 03 (function list) as the performance-limitation table, which the rename resolves. Also restored `cdd-builder`'s promised sample fixture and dropped three aspirational `references/` entries. New `docs/sheet-name-length-audit.md` records 19 over-length names across 10 skills (`386191e`)
+- **cs-architecture-builder** — W33 target (Wed 2026-08-12, #43): `cs_concept_reader.py` rewritten against the tabs `cs-concept-builder` actually emits, with old names kept as fallbacks; silent empty parse now raises instead of returning nothing. Verified by execution — 0/0/0 before, 2/6/1 after (`b9c8aef`)
+- **cs-concept-builder** — (Thu 2026-08-13, #44): re-verified byte-clean; an EOCD-aware rescan found **0** truly corrupt members across all 152 archives, correcting the earlier 13-archive figure, which was scanner false positives on xlsx zip members nested inside the skill bundles (`08cf363`)
+
+### Known issues _(found this week, deliberately not fixed)_
+- `cdd-checklist-reviewer` — `SKILL.md` instructs the user to read `references/methodology.md` and `references/cdd_checks.md` and lists both under "Files in this skill"; **neither exists in the archive**, which contains only `SKILL.md` + `scripts/`. Same dangling-reference class as `9b4660e`
+- `cs-architecture-checklist-reviewer` — `SKILL.md` claims "42 standard checklist requirements" and "14 verification checks"; `check_definitions.py` defines **15** `va_*` checks, so the true total is **43**. Both the description and the tab table are one short
+- `sotif-analysis-checklist-reviewer` — the two interacting probe defects from `386191e` remain open: the insufficiency keyword never matches (count is permanently 0) and the header row is counted as data
+- All four require repacking a `.skill` zip, which is POLISH-mode work; queued for next week
+
 ## [v2026.08.W32] — 2026-08-08
 
 _W32 (2026-08-03 → 2026-08-08). Accumulating since v2026.08.W31 (2026-08-01). Shipped by the Saturday RELEASE run (2026-08-08)._

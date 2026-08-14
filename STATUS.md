@@ -1,6 +1,6 @@
 # Skill Suite Status
 
-_Regenerated 2026-08-13 by autonomous daily run._
+_Regenerated 2026-08-14 by autonomous daily run (`scripts/regen_status.py`)._
 
 | Builder | Domain | Paired Reviewer | Last Touched | Flag |
 |---|---|---|---|---|
@@ -44,16 +44,16 @@ _Regenerated 2026-08-13 by autonomous daily run._
 | hw-architecture-builder.skill | safety | hw-architecture-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | hw-safety-reqs-builder.skill | safety | hw-safety-reqs-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | incident-response-plan-builder.skill | cyber | incident-response-plan-checklist-reviewer.skill | 2026-05-01 | 🟡 |
-| item-definition-builder.skill | safety | — none — | 2026-05-01 | 🔴 |
+| item-definition-builder.skill | safety | item-def-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | ldf-builder.skill | comms | ldf-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | lessons-learned-builder.skill | program-mgmt | lessons-learned-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | mbse-model-architecture-builder.skill | mbse | mbse-model-architecture-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | mbse-requirements-allocation-builder.skill | mbse | mbse-requirements-allocation-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | mbse-system-context-builder.skill | mbse | mbse-system-context-checklist-reviewer.skill | 2026-05-02 | 🟡 |
-| msa-gage-rr-builder.skill | safety | msa-gage-rr-checklist-reviewer.skill | 2026-05-01 | 🟡 |
+| msa-gage-rr-builder.skill | quality | msa-gage-rr-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | odx-builder.skill | diagnostics | odx-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | pfmea-builder.skill | quality | pfmea-checklist-reviewer.skill | 2026-07-22 | 🟢 |
-| ppap-package-builder.skill | quality | — none — | 2026-07-22 | 🔴 |
+| ppap-package-builder.skill | quality | ppap-checklist-reviewer.skill | 2026-07-22 | 🟢 |
 | safety-case-builder.skill | safety | safety-case-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | safety-gate-review-builder.skill | program-mgmt | safety-gate-review-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | safety-plan-builder.skill | safety | safety-plan-checklist-reviewer.skill | 2026-05-01 | 🟡 |
@@ -61,7 +61,7 @@ _Regenerated 2026-08-13 by autonomous daily run._
 | secure-coding-guidelines-builder.skill | cyber | secure-coding-guidelines-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | sotif-analysis-builder.skill | sotif | sotif-analysis-checklist-reviewer.skill | 2026-08-11 | 🟢 |
 | sotif-validation-strategy-builder.skill | sotif | sotif-validation-strategy-checklist-reviewer.skill | 2026-05-01 | 🟡 |
-| spc-chart-builder.skill | safety | spc-chart-checklist-reviewer.skill | 2026-05-01 | 🟡 |
+| spc-chart-builder.skill | quality | spc-chart-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | sw-arch-builder.skill | safety | sw-arch-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | sw-fmea-builder.skill | safety | sw-fmea-checklist-reviewer.skill | 2026-07-22 | 🟢 |
 | sw-hsis-builder.skill | safety | sw-hsis-checklist-reviewer.skill | 2026-05-01 | 🟡 |
@@ -84,7 +84,9 @@ _Regenerated 2026-08-13 by autonomous daily run._
 ## Summary
 
 - Builders: 76 · Reviewers: 76 · Total skill files: 152
-- Paired builders: 74/76 (97%)
-- 🔴 Orphan builders (no reviewer): 2
-- 🟡 Paired but stale (30+ days untouched): 60
-- 🟢 Paired and fresh (≤30 days): 14
+- Paired builders: 76/76 (100%)
+- 🔴 Orphan builders (no reviewer): 0
+- 🟡 Paired but stale (30+ days untouched): 61
+- 🟢 Paired and fresh (≤30 days): 15
+
+_2 builder(s) paired via `docs/PAIRING_ALIASES.md` rather than filename convention: `item-definition-builder.skill` → `item-def-checklist-reviewer.skill`, `ppap-package-builder.skill` → `ppap-checklist-reviewer.skill`._
