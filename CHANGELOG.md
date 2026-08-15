@@ -6,7 +6,16 @@ from `[Unreleased]` into a dated section at each weekly release.
 
 ## [Unreleased]
 
-_W33 (2026-08-10 → ). Accumulating since v2026.08.W32 (2026-08-08). Ships at the next Saturday RELEASE run._
+_W34 (2026-08-17 → ). Accumulating since v2026.08.W33 (2026-08-15). Ships at the next Saturday RELEASE run._
+
+### Carried forward
+- Four known defects shipped with v2026.08.W33 remain open and all require a `.skill` zip repack: `cdd-checklist-reviewer` dangling `references/` pointers; `cs-architecture-checklist-reviewer` check count 42 → 43 and 14 → 15 VA; the two interacting `sotif-analysis-checklist-reviewer` probe defects; and the 19 over-length sheet names in `docs/sheet-name-length-audit.md`. See the v2026.08.W33 section of `RELEASES.md`
+
+---
+
+## [v2026.08.W33] — 2026-08-15
+
+_W33 (2026-08-10 → 2026-08-15). Accumulating since v2026.08.W32 (2026-08-08). Shipped by the Saturday RELEASE run (2026-08-15)._
 
 ### Fixed
 - **STATUS pairing regression** — the Thursday run (`08cf363`) reported `74 strict-paired, 2 naming-mismatch orphans`, contradicting `docs/PAIRING_ALIASES.md`, which states that any STATUS regeneration MUST honor the alias table. Root cause is the one Monday's plan already flagged (`fbcf48e`): *"the STATUS generator is not version-controlled, so its fixes evaporate each run."* Each day re-derived the pairing logic inline, so the alias handling was rebuilt from scratch — and lost. Fixed at the root by committing `scripts/regen_status.py`, which **parses** the alias table out of `docs/PAIRING_ALIASES.md` instead of hard-coding it; a new alias row is now picked up with no code change. Back to 76/76 paired, 0 orphan (this commit)

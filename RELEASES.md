@@ -4,6 +4,64 @@ Weekly snapshots of `github.com/jherrodthomas/automotive-skills-suite`. Tags are
 
 ---
 
+## v2026.08.W33 — 2026-08-15
+
+ISO week 33 (2026-08-10 → 2026-08-15). Accumulating since `v2026.08.W32` (2026-08-08).
+
+### Highlights
+
+- **The generator that writes STATUS.md is now version-controlled.** For weeks each run re-derived the pairing logic inline, so every fix to it evaporated overnight — Thursday's run duly reported `74 paired / 2 orphan`, contradicting `docs/PAIRING_ALIASES.md`. `scripts/regen_status.py` landed Friday and *parses* the alias table out of that doc rather than hard-coding it. Back to 76/76 paired, and it stays that way.
+- **Three POLISH landings in three POLISH days**, second week running: `sotif-analysis-builder` (sheet names over Excel's 31-char limit — openpyxl warns and writes through, so shipped workbooks were malformed), `cs-architecture-builder` (chain reader rewritten against the tabs `cs-concept-builder` actually emits: 0/0/0 parsed before, 2/6/1 after), and `cs-concept-builder` (re-verified byte-clean).
+- **A prior week's finding was retracted, not quietly dropped.** The "13 more corrupt archives" note from the NUL-byte work was a scanner false positive — zip members legitimately end in NUL via the EOCD record. An EOCD-aware rescan puts the true count at **0 corrupt archives out of 152**.
+- **Domain labels corrected.** `msa-gage-rr-builder` and `spc-chart-builder` are Gage R&R and SPC — IATF 16949 quality tooling, not ISO 26262 safety. Nine builders matched no documented prefix rule and were hand-assigned each run; all nine are now pinned in the generator. This is why the domain spread below differs from W32's: it is a correction, not a migration.
+- Inventory unchanged at 76 builder + 76 reviewer pairs, 100% paired.
+
+### Changes this week
+
+**plan**
+- `fbcf48e` auto(plan): W33 carries three targets, opens cdd-builder for diagnostics, STATUS regen
+
+**polish**
+- `386191e` auto(polish): fix Excel-invalid SOTIF sheet names, restore cdd-builder sample fixture
+- `b9c8aef` auto(polish): repair cs-concept to cs-architecture chain break per #43, STATUS regen
+- `08cf363` auto(polish): #44 verified closed-loop, corrected scanner disproves wider archive corruption
+
+**docs**
+- `dc732bf` auto(docs): W33 changelog roll, three reviewer stubs, STATUS generator committed
+
+**release** _(this snapshot commit)_
+- STATUS.md regenerated via `scripts/regen_status.py` (76/76 paired, 15 fresh / 61 stale / 0 orphan)
+- RELEASES.md appended with this section
+- CHANGELOG `[Unreleased]` rolled into `## [v2026.08.W33]`
+- `docs/AUTONOMOUS_LOG.md` updated with the RELEASE-mode entry
+
+### Skills inventory
+
+- Builders: 76
+- Reviewers: 76
+- Paired: 76/76 (100.0%, incl. 2 alias pairings per `docs/PAIRING_ALIASES.md`)
+- Freshness: 🟢 15 touched ≤30d · 🟡 61 stale · 🔴 0 orphan
+- Domain spread: safety=15, quality=10, comms=8, cyber=6, autosar=5, diagnostics=5, program-mgmt=5, v&v=5, aspice=4, sysml=4, calibration=3, mbse=3, sotif=3
+
+### Open issues at snapshot
+
+8 open, all labeled `weekly-target`: #43, #44, #45, #46, #47, #48, #49, #50. **#43, #44, #45, #47 and #48 have met their definition of done and remain open only because the autonomous run never closes issues** — they are queued for a human click. Genuinely carrying into W34: #46 (repo-wide chain-contract audit, carried ×5 and never started), #49 (program-mgmt, DoD met W32 but unclosed), #50 (`cdd-builder` diagnostics polish, opened Monday, partial — sample fixture restored, reviewer-side dangling references still open).
+
+### Known issues shipped with this tag
+
+Four defects were found this week and deliberately left unfixed, because each needs a `.skill` zip repack (POLISH-mode work):
+
+- `cdd-checklist-reviewer` — `SKILL.md` points at `references/methodology.md` and `references/cdd_checks.md`; neither exists in the archive
+- `cs-architecture-checklist-reviewer` — advertises 42 checks / 14 verification checks; `check_definitions.py` defines 15 VA checks, so the real total is 43
+- `sotif-analysis-checklist-reviewer` — insufficiency keyword probe never matches (count permanently 0) and the header row is counted as data; must be fixed together
+- `docs/sheet-name-length-audit.md` — 19 over-length sheet names across 10 skills still unactioned; worst are `secure-coding-guidelines-builder` (37) and `8d-problem-solving-builder` (34 ×2)
+
+### Compare
+
+https://github.com/jherrodthomas/automotive-skills-suite/compare/v2026.08.W32...v2026.08.W33
+
+---
+
 ## v2026.08.W32 — 2026-08-08
 
 ISO week 32 (2026-08-03 → 2026-08-08). Accumulating since `v2026.08.W31` (2026-08-01).

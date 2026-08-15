@@ -1298,3 +1298,19 @@ Standout finding is non-DoD and more impactful than the trigger gaps: the SKILL.
 - Monday PLAN: `docs/sheet-name-length-audit.md` still lists 19 over-length sheet names across 10 skills, unactioned since 2026-08-11. The three worst (`secure-coding-guidelines-builder` at 37, `8d-problem-solving-builder` at 34 ×2) are good W34 targets.
 - Human: #43 and #44 both meet DoD and are ready to close (no-autonomous-close rule).
 - Consider whether the 🟡 30-day threshold is signal or noise — 61 stale vs 15 fresh, and a one-skill-per-day cadence mathematically cannot hold 76 builders inside a 30-day window. Third run in a row raising this.
+
+## 2026-08-15 (autonomous run, RELEASE)
+
+**Mode:** RELEASE
+**Action:** Cut weekly snapshot `v2026.08.W33` — RELEASES.md section appended, CHANGELOG `[Unreleased]` rolled into the tag, STATUS regenerated via the newly committed generator, lightweight tag pushed.
+**Files touched:** RELEASES.md, CHANGELOG.md, STATUS.md, docs/AUTONOMOUS_LOG.md
+**Tests:** N/A (no test suite in this repo yet) — verified by execution: `scripts/regen_status.py` ran clean (76 builders / 76 paired / 2 via alias / 0 orphan / 61 stale / 15 fresh); confirmed `v2026.08.W33` absent from `git tag -l` before tagging; `git status --short` inspected before commit to confirm no token-bearing file staged.
+**Skill count:** 76 builders / 76 reviewers / 100% paired
+**Open issues:** 8
+**Notes:** Five commits this week, so a real release rather than a quiet-week skip. The week's most durable change was Friday's, and it is worth calling out in the release notes rather than burying it: `scripts/regen_status.py` is the first time the STATUS generator has been version-controlled, which is what finally stopped the alias-pairing regression from reappearing every run. Two judgement calls in writing this snapshot. First, the domain spread differs sharply from W32 (safety 11→15, quality 5→10, `other` 9→0), which looks like churn but is not — the nine builders that matched no documented prefix rule are now pinned in the generator, and two of them (`msa-gage-rr-builder`, `spc-chart-builder`) were genuinely mislabelled `safety` when they are Gage R&R and SPC quality tooling. I labelled that explicitly as a correction in the notes so nobody reads it as skills moving between domains. Second, five of the eight open issues have met their definition of done and are only open because of the no-autonomous-close rule; rather than list all eight as "carrying", the notes separate the ready-to-close set from the three genuinely still-in-flight (#46, #49, #50). #46 has now been carried five weeks without a single run starting it, which is the clearest signal in the repo that it is scoped too large for a one-day POLISH slot. Per instructions, no GitHub Release object was published — the tag is pushed and RELEASES.md is written, awaiting a human click on Publish.
+**Follow-ups:**
+- Human: publish the GitHub Release for `v2026.08.W33` after reviewing the RELEASES.md section.
+- Human: close #43, #44, #45, #47, #48 — all five meet DoD, evidence is in the polish logs and changelog.
+- Monday PLAN: **descope #46**. Five weeks carried, zero starts. Split it into one-domain-per-week chain-contract audits (start with cyber, where two chain breaks have already been found) so it fits a single POLISH day.
+- Monday PLAN: the four known issues shipped with this tag are all zip-repack POLISH work and make good W34 targets — the `cdd-checklist-reviewer` dangling references and the `cs-architecture-checklist-reviewer` 42→43 count fix are both small and self-contained.
+- Fourth run raising this: 61 stale vs 15 fresh. A one-skill-per-day cadence cannot mathematically hold 76 builders inside a 30-day window, so 🟡 is measuring the cadence, not the health of the repo. Either widen the threshold to 90 days or drop the flag.
