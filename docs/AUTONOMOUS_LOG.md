@@ -1330,3 +1330,19 @@ Standout finding is non-DoD and more impactful than the trigger gaps: the SKILL.
 - Human decision, deadline 2026-08-19: fix the stale-comment rule (skip when DoD is Met) or close the finished issues, before the rule fires on #43.
 - Monday PLAN: **#46 still needs descoping** — five weeks, zero starts. Split into one-domain-per-week chain-contract audits, starting with cyber where two breaks have already been found.
 - Still unaddressed after five runs: 61 stale vs 15 fresh. One-skill-per-day cannot hold 76 builders in a 30-day window; 🟡 measures cadence, not health. Widen to 90 days or drop the flag.
+
+## 2026-08-17 (autonomous run, PLAN)
+
+**Mode:** PLAN
+**Action:** W34 plan written with three targets for three polish days; #46 descoped after five carries and moved to Tuesday-first; two new issues opened (#51 autosar, #52 v&v), entering both domains for the first time.
+**Files touched:** `docs/weekly/WEEK-2026-W34.md` (new), `STATUS.md` (regenerated), `docs/AUTONOMOUS_LOG.md`
+**Tests:** N/A (no test suite in this repo yet)
+**Skill count:** 76 builders / 76 reviewers / 100% paired (2 via alias) — red 0, yellow 61, green 15
+**Open issues:** 10 (8 carried + #51, #52). Of the 8 carried, 7 are DoD-met per `docs/triage/2026-08-16.md`; #46 is the only genuinely open work item.
+**Notes:** Two judgement calls worth a human eye. First, priority rule (a) — "skills referenced by open issues" — was applied to the DoD-open subset rather than the raw open list. Applied literally it would have refilled this week's table with seven finished issues, which is the distortion the last two triages flagged. Second, #46 was descoped rather than carried a sixth time: the original all-pairs audit has never fit a polish day, which is precisely why it has never been started, so the DoD is narrowed to builder-to-builder reads only (the shape that actually broke in #43) and slotted Tuesday-first instead of last. Both new issues went out with a domain label and no type label — third consecutive week the missing `polish-target` label has blocked that. STATUS moved for the first time in three weeks (yellow 64 -> 61, green 12 -> 15) on the back of W33's polish commits. `scripts/regen_status.py` was used rather than an inline regeneration, so the two alias pairings survived without special handling.
+**Follow-ups:**
+- Tue: #46 first, descoped audit, before any other target. If it still does not fit, write that conclusion into the polish log rather than carrying it a sixth time.
+- Wed: #51 autosar-bsw-config-builder. Thu: #52 traceability-matrix-builder.
+- Next Sunday's TRIAGE will post a stale-nudge on #43 (crosses 30 days on 08-19) despite its work being shipped in v2026.08.W33 — the rule needs the DoD-Met skip, or the seven issues need closing.
+- W35 lead candidate: `sysml-block-diagram-builder`; mbse and sysml are the last two never-worked domains.
+- The fixed `/tmp/automotive-work` path in the task file failed `rm -rf` for the second week running (root-owned `.git` objects). Timestamped clone dir used again; worth making that permanent in the task file.
