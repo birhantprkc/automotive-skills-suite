@@ -1346,3 +1346,30 @@ Standout finding is non-DoD and more impactful than the trigger gaps: the SKILL.
 - Next Sunday's TRIAGE will post a stale-nudge on #43 (crosses 30 days on 08-19) despite its work being shipped in v2026.08.W33 — the rule needs the DoD-Met skip, or the seven issues need closing.
 - W35 lead candidate: `sysml-block-diagram-builder`; mbse and sysml are the last two never-worked domains.
 - The fixed `/tmp/automotive-work` path in the task file failed `rm -rf` for the second week running (root-owned `.git` objects). Timestamped clone dir used again; worth making that permanent in the task file.
+
+## 2026-08-18 (autonomous run, POLISH)
+
+**Mode:** POLISH
+**Action:** #46 done after five carries — descoped chain-contract audit shipped with its generator, and it immediately found a real silent chain break (new issue #53).
+**Files touched:** `scripts/chain_contract_audit.py` (new), `docs/chain-contract-audit.md` (new), `docs/skill-polish-log/fmeda-builder.md` (appended), `STATUS.md` (regen), `docs/AUTONOMOUS_LOG.md`
+**Tests:** N/A (no test suite in this repo yet) — but the one finding was verified by executing `read_tsc()` against three synthetic workbooks, including a control that isolates each defect
+**Skill count:** 76 builders / 76 reviewers / 100% paired (2 via alias registry) — red 0 / yellow 61 / green 15
+**Open issues:** 11 (10 carried + #53 opened this run)
+
+**Notes:** The W34 descope was the right call: bounded to builder-to-builder reads, #46 fit inside one polish day with room to verify the finding properly. 76 builders scanned, 15 cross-skill reader scripts, 16 declared chains, 45 tab assertions — 40 MATCH, 3 ALIAS, 1 FALLBACK, 1 BREAK.
+
+The BREAK is `fmeda-builder/scripts/tsc_reader.py`. It asks a TSC workbook for `05_Safety_Mechanisms_From_TSC`, which is **fmeda's own output tab name**; tsc-builder emits `04_Safety_Mechanism_Catalog`. Every other TSC reader in the repo (`hw-architecture`, `sw-arch`, `safety-case`) gets this right, so fmeda is the lone outlier. It fails silently — `return {}`, no exception — exactly the #43 shape. A second defect makes a one-line rename insufficient: the header probe only scans column 1, and `Mechanism ID` lives in column 5 of tsc's catalog. Both were confirmed by execution, with a control run proving the parse logic itself is sound. Blast radius is bounded: SPFM/LFM/PMHF are formula-driven off the editable DC% column, so no metric is silently miscomputed; what's lost is the imported mechanism baseline and the coverage cross-check SKILL.md line 81 tells the analyst to perform. Filed as #53 (`chain-break`, `safety`, `skill-bug`). Not fixed here — #46's DoD is explicitly read-only and the fix deserves its own pass.
+
+Three judgement calls worth recording. (1) The first version of the scanner rated this finding SELF-AMBIG and reported zero breaks, on the reasoning that fmeda emits a tab of that name itself. That was backwards — under explicit attribution (`read_tsc(tsc_path)` names its upstream in both the function and the parameter) a reader hunting for its own output tab upstream is *the bug*, not an excuse for it. Rule corrected; a heuristic that explains away the one real finding is worse than no heuristic. (2) `fault_tree_renderer.py` inside fsc-builder reloads fsc-builder's own output; it was being compared against hara-builder and generating noise. Now classified SELF-READ and excluded. (3) `cs-architecture-builder` was invisible to the first scan because its post-#43 reader keeps candidate names in module-level tuples rather than inline literals. Added AST parsing of those tuples and treat them as acceptance groups — which is also why its three legacy names read ALIAS, not BREAK.
+
+Two limits the human should know about. The audit compares **tab names only**, not column layouts — and defect 2 of #53 is precisely a column-layout failure, found by hand while verifying, not by the scanner. Column-contract checking is the obvious next iteration and would likely find more. Also, builder-to-reviewer pairs remain unaudited by design; the original #46 scope included them.
+
+`/tmp/automotive-work` was clean this run — no root-owned leftover, so no timestamped-sibling workaround needed. The W33/W34 note about making `WORK` timestamped still stands as cheap insurance.
+
+**Follow-ups:**
+- Wed (W34 #51): `autosar-bsw-config-builder`, per plan. Thu (#52): `traceability-matrix-builder`.
+- **#46 is now DoD-met** — add it to the standing close list. It has been the only genuinely open item for five weeks; the open count is now 11 with 10 of those DoD-met.
+- Fix #53 on a POLISH day: alias tuple + full-width header scan + a warning on zero-row import. Small and bounded, roughly a 20-line change.
+- Extend `chain_contract_audit.py` to column contracts (header row content, not just tab names). #53's second defect is the proof this is worth doing.
+- Consider running the audit as a pre-push check once there's CI — it is fast, deterministic, and read-only.
+- `build_fmeda_worksheet()` takes a `mechanisms` param it never reads. Separate smell, noted in the polish log, not filed.

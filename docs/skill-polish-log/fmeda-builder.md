@@ -202,3 +202,91 @@ content issues. Recommend the Classification ladder fix gets prioritized in a
 maintainer touch-up rather than carried as another polish-log appendix; the logic
 bug is reachable and would produce a wrong rating for an unmechanized failure
 mode if read literally.
+
+## 2026-08-18 — chain-contract audit finding (issue #46 pass)
+
+**Severity: high.** Not a cosmetic rename. Found by `scripts/chain_contract_audit.py`,
+then hand-verified by execution. No `.skill` file was modified this run — #46's
+definition of done is read-only, and the repair belongs on a POLISH day of its own.
+
+### What's good
+
+- `read_tsc()` is defensive in the right places: it locates the header row by
+  content rather than assuming a fixed offset, tolerates missing columns, and
+  parses `"99%"`, `99`, and `None` into a float without throwing.
+- The FMEDA metric tabs (SPFM / LFM / PMHF) are formula-driven off the editable
+  DC% column, so an analyst who fills the worksheet by hand still gets correct
+  arithmetic. The break below degrades the *import*, not the *math*.
+
+### What to fix
+
+`fmeda-builder/scripts/tsc_reader.py` cannot read a workbook produced by
+`tsc-builder`. Two independent defects, both in `read_tsc()`:
+
+**1. Wrong tab name (line 21).** The reader asks for `05_Safety_Mechanisms_From_TSC`
+and returns `{}` if it is absent. `tsc-builder` emits no such tab — its mechanism
+tab is `04_Safety_Mechanism_Catalog`. `05_Safety_Mechanisms_From_TSC` is
+**fmeda-builder's own output tab** (`generate_fmeda.py:239`); the reader is
+hunting for its own echo tab inside the upstream workbook.
+
+Corroboration: every other reader of a TSC workbook in this repo —
+`hw-architecture-builder`, `sw-arch-builder`, `safety-case-builder` — reads
+`04_Safety_Mechanism_Catalog`. `fmeda-builder` is the lone outlier.
+
+**2. Column-1-only header scan (lines ~30-36).** The header probe reads
+`ws.cell(r, 1)` for rows 1-10 and looks for `"Mechanism ID"`. In
+`tsc-builder`'s catalog the row-4 header is:
+
+```
+FSR_ID | Allocated ASIL | Branch | Linked Node | Mechanism ID | Mechanism Name | Default DC% | Detection Time (target) | Selection
+```
+
+`Mechanism ID` sits in **column 5**. So even after the tab is renamed correctly,
+the header row is never found and the function still returns `{}`.
+
+### Evidence (executed, not inferred)
+
+Ran `read_tsc()` against three synthetic workbooks built to `tsc-builder`'s
+emitted shape:
+
+| Input | Result |
+|---|---|
+| A. Real tab name `04_Safety_Mechanism_Catalog`, real 9-column header | `{}` |
+| B. Tab renamed to `05_Safety_Mechanisms_From_TSC`, real 9-column header | `{}` |
+| C. Tab renamed **and** headers moved to column 1 | 2 mechanisms parsed correctly |
+
+B is the important row: it isolates defect 2 and proves a one-line rename is an
+incomplete fix. C is the control — it confirms the parse logic itself is sound
+once it can find the header.
+
+### Blast radius
+
+`mechanisms` is consumed only by `build_tsc_mechanisms()` (`generate_fmeda.py:470`).
+`build_fmeda_worksheet()` accepts the dict but never reads it — column 9
+"Allocated Mechanism" is written empty and DC% defaults to 50 for the analyst to
+edit. So:
+
+- **Not affected:** SPFM / LFM / PMHF arithmetic. Nothing is silently miscomputed.
+- **Affected:** tab `05_Safety_Mechanisms_From_TSC` ships header-only on every run,
+  no matter what TSC is passed. SKILL.md line 70 claims the skill "Reads chosen
+  mechanisms + baseline DC% from the TSC" and line 81 tells the analyst to use
+  that tab to "verify that every failure mode you enumerated in FMEDA is covered
+  by at least one mechanism". That cross-check has never been possible.
+- The failure is **silent**: no exception, no warning, an empty tab that looks
+  like a TSC with no mechanisms rather than a failed read. Identical shape to #43.
+
+### Suggested edits (deferred — do not apply in an audit pass)
+
+1. Accept a tuple of names, preferred first, exactly as the #43 repair did in
+   `cs-architecture-builder/scripts/cs_concept_reader.py`:
+   `MECH_SHEETS = ("04_Safety_Mechanism_Catalog", "05_Safety_Mechanisms_From_TSC")`.
+2. Widen the header probe to scan all columns of rows 1-10, not column 1 only.
+3. Return a `(mechanisms, warnings)` pair, or log to stderr, so a zero-row import
+   is visible instead of silent.
+4. Drop the unused `mechanisms` parameter from `build_fmeda_worksheet()`, or wire
+   it into the "Allocated Mechanism" column as the signature implies it should be.
+5. Add the tab contract as a module docstring, the way `cs_concept_reader.py`
+   documents its own.
+
+Tracked as its own issue. Items 1-2 are the fix; 3-5 are the reason it went
+unnoticed for as long as it did.
