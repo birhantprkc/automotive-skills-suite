@@ -1,6 +1,6 @@
 # Chain-contract audit — builder-to-builder xlsx handoffs
 
-_Generated 2026-08-18 by `scripts/chain_contract_audit.py` (read-only; modifies no `.skill` file)._
+_Generated 2026-08-19 by `scripts/chain_contract_audit.py` (read-only; modifies no `.skill` file)._
 
 Scope is builder-to-builder reads only, per the W34 descope of [#46](https://github.com/jherrodthomas/automotive-skills-suite/issues/46). Builder-to-reviewer pairs are excluded: a reviewer ships with the builder it reviews, so the two cannot drift apart the way #43 did.
 
@@ -9,24 +9,18 @@ Scope is builder-to-builder reads only, per the W34 descope of [#46](https://git
 - Builders scanned: **76**
 - Cross-skill reader scripts found: **15** (in 13 skills)
 - Declared chains audited: **16**
-- Sheet-name assertions checked: **45**
+- Sheet-name assertions checked: **46**
 
 | Verdict | Count |
 |---|---|
-| MATCH | 40 |
-| ALIAS | 3 |
+| MATCH | 41 |
+| ALIAS | 4 |
 | FALLBACK | 1 |
 | SELF-AMBIG | 0 |
 | UNVERIFIABLE | 0 |
-| BREAK | 1 |
+| BREAK | 0 |
 
-**1 confirmed BREAK(s).** One issue each — see the table below. Every BREAK is hand-verified against the upstream generator before an issue is opened; the verification for each is written up in `docs/skill-polish-log/`.
-
-## BREAKs and their issues
-
-| Chain | Expected tab | Issue |
-|---|---|---|
-| `fmeda-builder` → `tsc-builder` | `05_Safety_Mechanisms_From_TSC` | [#53](https://github.com/jherrodthomas/automotive-skills-suite/issues/53) |
+**No confirmed BREAKs.** Every hard-coded tab name a builder expects from another builder is a name that builder actually emits.
 
 ## Chains audited
 
@@ -35,7 +29,7 @@ Scope is builder-to-builder reads only, per the W34 descope of [#46](https://git
 | `cs-architecture-builder` | `cs-concept-builder` | 7 | ALIAS |
 | `cs-concept-builder` | `cs-goals-builder` | 1 | MATCH |
 | `cs-goals-builder` | `tara-builder` | 2 | MATCH |
-| `fmeda-builder` | `tsc-builder` | 1 | BREAK |
+| `fmeda-builder` | `tsc-builder` | 2 | ALIAS |
 | `fsc-builder` | `hara-builder` | 2 | MATCH |
 | `hsi-builder` | `tsc-builder` | 1 | MATCH |
 | `hw-architecture-builder` | `tsc-builder` | 5 | MATCH |
@@ -53,11 +47,11 @@ Scope is builder-to-builder reads only, per the W34 descope of [#46](https://git
 
 | Verdict | Reader | Script:line | Function | Upstream | Expected tab | Note |
 |---|---|---|---|---|---|---|
-| BREAK | `fmeda-builder` | `scripts/tsc_reader.py`:21, 24 | `read_tsc` | `tsc-builder` | `05_Safety_Mechanisms_From_TSC` | upstream emits no such tab; this is the READING skill's own output tab name; nearest upstream tab `04_Safety_Mechanism_Catalog` |
 | FALLBACK | `safety-case-builder` | `scripts/multi_xlsx_reader.py`:24 | `read_hara` | `hara-builder` | `05_Safety_Goals` | alternative branch; sibling matches |
 | ALIAS | `cs-architecture-builder` | `scripts/cs_concept_reader.py`:23 | `(module constant)` | `cs-concept-builder` | `02_CSRs_Catalog` | declared legacy alias; preferred name matches |
 | ALIAS | `cs-architecture-builder` | `scripts/cs_concept_reader.py`:24 | `(module constant)` | `cs-concept-builder` | `03_CAL_Allocations` | declared legacy alias; preferred name matches |
 | ALIAS | `cs-architecture-builder` | `scripts/cs_concept_reader.py`:25 | `(module constant)` | `cs-concept-builder` | `04_Threat_Mapping` | declared legacy alias; preferred name matches |
+| ALIAS | `fmeda-builder` | `scripts/tsc_reader.py`:29 | `(module constant)` | `tsc-builder` | `05_Safety_Mechanisms_From_TSC` | declared legacy alias; preferred name matches |
 | MATCH | `cs-architecture-builder` | `scripts/cs_concept_reader.py`:23 | `(module constant)` | `cs-concept-builder` | `05_CSR_Catalog` |  |
 | MATCH | `cs-architecture-builder` | `scripts/cs_concept_reader.py`:24 | `(module constant)` | `cs-concept-builder` | `06_CAL_Allocation` |  |
 | MATCH | `cs-architecture-builder` | `scripts/cs_concept_reader.py`:25 | `(module constant)` | `cs-concept-builder` | `02_CS_Goals_Echo` |  |
@@ -65,6 +59,7 @@ Scope is builder-to-builder reads only, per the W34 descope of [#46](https://git
 | MATCH | `cs-concept-builder` | `scripts/cs_goals_reader.py`:16, 17 | `read_cs_goals` | `cs-goals-builder` | `00_Title_Page` |  |
 | MATCH | `cs-goals-builder` | `scripts/tara_reader.py`:47, 48 | `read_tara_xlsx` | `tara-builder` | `11_Cybersecurity_Goals` |  |
 | MATCH | `cs-goals-builder` | `scripts/tara_reader.py`:51, 52 | `read_tara_xlsx` | `tara-builder` | `09_Risk_Determination` |  |
+| MATCH | `fmeda-builder` | `scripts/tsc_reader.py`:29 | `(module constant)` | `tsc-builder` | `04_Safety_Mechanism_Catalog` |  |
 | MATCH | `fsc-builder` | `scripts/generate_fsc.py`:203, 204 | `read_hara` | `hara-builder` | `00_Title_Page` |  |
 | MATCH | `fsc-builder` | `scripts/generate_fsc.py`:218, 220 | `read_hara` | `hara-builder` | `13_Safety_Goals` |  |
 | MATCH | `hsi-builder` | `scripts/tsc_reader.py`:28, 32 | `read_hsi_signals` | `tsc-builder` | `06_HSI_Specification` |  |

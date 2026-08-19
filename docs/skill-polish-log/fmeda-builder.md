@@ -290,3 +290,91 @@ edit. So:
 
 Tracked as its own issue. Items 1-2 are the fix; 3-5 are the reason it went
 unnoticed for as long as it did.
+
+---
+
+## 2026-08-19 — #53 fix pass (chain break repaired)
+
+**Mode:** POLISH (Wednesday, W34)
+**Issue:** [#53](https://github.com/jherrodthomas/automotive-skills-suite/issues/53) — `skill-bug`, `chain-break`, `safety`
+**File changed:** `skills/fmeda-builder.skill` → `fmeda-builder/scripts/tsc_reader.py` (rewritten, 88 → 197 lines)
+**Severity:** medium — no metric was ever miscomputed; an advertised import silently produced nothing.
+
+### Target selection
+
+Yesterday's follow-up slotted Wednesday for #51 (`autosar-bsw-config-builder`). Overridden:
+the standing POLISH priority order puts "open issue labeled `skill-bug`" first, #53 carries
+both `skill-bug` and `chain-break`, and yesterday's own notes also asked for it "on a POLISH
+day". It was found yesterday, is bounded, and already had a written DoD — fixing it while the
+context is warm beats letting it age. #51 moves to Thursday.
+
+### Verification chain — real, not synthetic
+
+Yesterday's evidence used synthetic workbooks built to tsc-builder's shape. DoD item 5 required
+a real one, so the full upstream chain was executed from the shipped sample inputs:
+
+| Step | Command | Result |
+|---|---|---|
+| HARA | `generate_hara.py sample_input_esc.json` | 25 safety goals, 468 significant rows |
+| FSC | `generate_fsc.py hara.xlsx sample_block_diagram_esc.json` | 375 FSRs, 375 ASIL allocations, 25 fault trees |
+| TSC | `generate_tsc.py fsc.xlsx sample_architecture_esc.json` | 13 tabs, 375 chosen mechanisms, 750 TSRs |
+
+`04_Safety_Mechanism_Catalog` came out exactly as the issue predicted: title row 1, analyst
+note row 2, header row 4, `Mechanism ID` in column 5.
+
+### Before / after against that real TSC
+
+| | mechanisms parsed | distinct nodes | exception | warning |
+|---|---|---|---|---|
+| Before | **0** | 0 | none | none |
+| After | **39** | 15 | none | none (clean read) |
+
+Full `generate_fmeda.py` run against the real TSC: 13 tabs, 30 FMEDA rows, 8 HW elements.
+`05_Safety_Mechanisms_From_TSC` went from header-only to 39 populated rows.
+`07_SPFM` / `08_LFM` / `09_PMHF` / `06_FMEDA_Worksheet` shapes unchanged — no regression.
+
+### DoD
+
+| # | Requirement | Status |
+|---|---|---|
+| 1 | Preferred-then-legacy tab tuple | **DONE** — `MECHANISM_SHEETS = ("04_Safety_Mechanism_Catalog", "05_Safety_Mechanisms_From_TSC")`, same shape as the post-#43 `cs_concept_reader.py` |
+| 2 | Header probe scans all columns of rows 1-10 | **DONE** — `_find_header_row()` sweeps rows 1-10 × cols 1-20 |
+| 3 | Zero-row import surfaced, not silent | **DONE** — stderr warning on missing tab, header-not-found, zero rows parsed, and legacy-tab use |
+| 4 | `chain_contract_audit.py` reads MATCH | **DONE** — `fmeda-builder → tsc-builder` now MATCH + ALIAS; repo-wide **0 BREAK** (was 1) |
+| 5 | Verified against real tsc-builder output | **DONE** — see chain table above |
+
+Negative cases exercised: workbook with no catalog tab → `{}` + warning; catalog tab with a
+header but no data rows → `{}` + warning; legacy-named tab with the old column-1 layout →
+parses, with a warning naming the legacy tab.
+
+### Two defects found while fixing, beyond the issue's scope
+
+**A. DC% ranges parsed to 0.0.** Not in the issue. The catalog carries qualitative text —
+`60-80%`, `>=99%`, `90-99%`, `99%+` — and the old `float(dc_str.replace("%",""))` raised on
+every one of them, falling back to 0.0. Fixing tabs 1-2 alone would have shipped a "working"
+import where all 39 mechanisms read DC = 0 — visibly worse than the empty tab it replaced.
+Now: ranges collapse to their midpoint (`60-80%` → 70.0), bounded forms take the bound
+(`>=99%` and `99%+` → 99.0), and the original text is preserved in a new `dc_raw` key.
+3 of 39 still read 0.0 — all genuinely `n/a` in the catalog. That is honest, not a parse failure.
+
+**B. Alternative-candidate rows lost their node.** tsc-builder writes FSR_ID / ASIL / Branch /
+Linked Node only on the first `[primary]` row; `[alternative]` rows leave them blank. Without a
+forward-fill every alternative keys to `(None, mech_id)` and collides across FSRs. The reader now
+carries the last seen Linked Node forward. This is what produced 15 distinct nodes instead of 1.
+
+### Left alone, deliberately
+
+- `build_fmeda_worksheet()` still takes a `mechanisms` param it never reads — real smell, explicitly
+  out of scope per the issue. Still unfiled.
+- `dc_raw` is populated but nothing consumes it. The echo tab keeps writing the numeric `dc` into its
+  numeric "Default DC%" column. Showing the analyst `60-80%` instead of `70` is arguably more honest
+  and is a one-line change to `build_tsc_mechanisms()` — but it changes a column's type, so it is a
+  separate decision, not a drive-by.
+- SKILL.md needed **no** edit. Line 70 ("Reads chosen mechanisms + baseline DC% from the TSC") and
+  line 81 (the coverage cross-check) were aspirational before this pass and are now simply true.
+
+### Suggested next
+
+- Extend `chain_contract_audit.py` to column contracts. Defect 2 of #53 and defect A above are both
+  column-layout failures that a tab-name scanner cannot see. This is the second run in a row where
+  the real bug was one level below what the scanner checks.

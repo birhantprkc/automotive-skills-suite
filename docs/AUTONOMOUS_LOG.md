@@ -1373,3 +1373,29 @@ Two limits the human should know about. The audit compares **tab names only**, n
 - Extend `chain_contract_audit.py` to column contracts (header row content, not just tab names). #53's second defect is the proof this is worth doing.
 - Consider running the audit as a pre-push check once there's CI — it is fast, deterministic, and read-only.
 - `build_fmeda_worksheet()` takes a `mechanisms` param it never reads. Separate smell, noted in the polish log, not filed.
+
+## 2026-08-19 (autonomous run, POLISH)
+
+**Mode:** POLISH
+**Action:** Fixed #53 — `fmeda-builder`'s TSC reader now actually reads a tsc-builder workbook; repo-wide chain BREAKs go 1 → 0.
+**Files touched:** `skills/fmeda-builder.skill` (`scripts/tsc_reader.py` rewritten), `docs/skill-polish-log/fmeda-builder.md` (appended), `docs/chain-contract-audit.md` (regen), `STATUS.md` (regen), `docs/AUTONOMOUS_LOG.md`
+**Tests:** N/A (no test suite in this repo yet) — verified by executing the real hara → fsc → tsc chain from shipped sample inputs, then running `read_tsc()` and the full `generate_fmeda.py` against that output, plus three negative cases
+**Skill count:** 76 builders / 76 reviewers / 100% paired (2 via alias registry) — red 0 / yellow 61 / green 15
+**Open issues:** 11 (unchanged; #53 is now DoD-met)
+
+**Notes:** Deviated from yesterday's plan, on purpose. Wednesday was slotted for #51 (`autosar-bsw-config-builder`), but the standing POLISH priority order puts `skill-bug` issues first and #53 carries `skill-bug` + `chain-break`. It was opened yesterday, had a written DoD, and was small — fixing it with the context still warm beat letting it age five weeks the way #46 did. #51 moves to Thursday.
+
+The fix itself is what the issue specified: preferred-then-legacy tab tuple (`04_Safety_Mechanism_Catalog` first, fmeda's own `05_Safety_Mechanisms_From_TSC` kept as a fallback for hand-built workbooks), a header probe that sweeps all columns of rows 1-10 instead of column 1 only, and stderr warnings on every silent-failure path. DoD item 5 asked for verification against real tsc-builder output rather than a synthetic stand-in, so the whole upstream chain was executed from the shipped samples — HARA (25 safety goals) → FSC (375 FSRs) → TSC (375 mechanisms, 13 tabs). Against that: 0 mechanisms before, 39 after, across 15 distinct nodes. Full FMEDA generation clean, metric tabs unchanged.
+
+Two defects surfaced during the fix that the issue had not caught, both one level below what the tab-name scanner checks. First, the catalog carries DC% as qualitative text (`60-80%`, `>=99%`, `99%+`) and the old `float()` call raised on all of it and fell back to 0.0 — so landing items 1-2 alone would have shipped an import where all 39 mechanisms read DC = 0, which looks working and is worse than the empty tab it replaced. Ranges now collapse to midpoints, bounds take the bound, and the raw text is preserved in a new `dc_raw` key. Second, tsc-builder writes Linked Node only on the `[primary]` row and leaves `[alternative]` rows blank, so without a forward-fill every alternative keyed to `(None, mech_id)` and collided across FSRs. Both fixes are small and both are documented in the polish log.
+
+Two things deliberately not done. `build_fmeda_worksheet()` still accepts a `mechanisms` argument it never reads — explicitly out of scope per the issue, still unfiled. And `dc_raw` is populated but unconsumed; making the echo tab display `60-80%` instead of `70` is arguably more honest but changes a column's type, so it is a decision rather than a drive-by. SKILL.md needed no edit at all — lines 70 and 81 described behaviour that was aspirational before this pass and is now simply true.
+
+Worth the human's attention: this is the second consecutive run where the actual bug lived below the level `chain_contract_audit.py` inspects. It compares tab names; defect 2 of #53 and the DC-parse defect are both column-layout failures found by hand. Column-contract checking is now the highest-value extension to that scanner.
+
+**Follow-ups:**
+- Thu: #51 `autosar-bsw-config-builder` (deferred from today), then #52 `traceability-matrix-builder`.
+- **#53 is DoD-met** — all five items verified. Add to the standing close list alongside #46. Open count is 11, all 11 DoD-met.
+- Extend `chain_contract_audit.py` to column contracts (header row content, not just tab names). Two runs of evidence now.
+- Decide whether the FMEDA echo tab should show `dc_raw` text instead of the numeric midpoint. Small, but it is a real display-semantics choice.
+- `build_fmeda_worksheet()`'s unused `mechanisms` param — still unfiled after two passes. Either wire it into "Allocated Mechanism" or drop it.
