@@ -1,0 +1,138 @@
+# Polish log — `hw-safety-reqs-builder` (+ paired reviewer)
+
+## 2026-09-15 — first pass (POLISH, W38 rotation target)
+
+**Domain:** safety · **Last touched before today:** 2026-05-01 (the original cohort) · **Severity: medium-high**
+
+Selected by rule (c) — least-recently-touched builder — and by the W37 plan's binding
+rotation constraint that W38 take at least one target from outside the modeling/V&V
+cluster, drawn from the 2026-05-01 cohort. Rule (a) supplied nothing: the open-issue
+queue is empty for the first time in the log's history (see journal).
+
+### Method
+
+Executed, not read. Built the full upstream chain from the shipped ESC fixtures so the
+input was a real `tsc-builder` workbook rather than a hand-made stub:
+
+```
+hara-builder  sample_input_esc.json          -> HARA.xlsx  (900 rows, 25 safety goals)
+fsc-builder   HARA.xlsx + block_diagram.json -> FSC.xlsx   (375 FSRs, 25 fault trees)
+tsc-builder   FSC.xlsx + architecture.json   -> TSC.xlsx   (750 TSRs, 375 HW-TSR)
+hw-safety-reqs-builder TSC.xlsx + sample     -> HWSR.xlsx  (10 tabs, 825 HW-SRs)
+hw-safety-reqs-checklist-reviewer HWSR.xlsx  -> checklist
+```
+
+All four builders ran clean, exit 0, no crashes. This pair is in materially better shape
+than the mbse/sysml/traceability pairs of the last three weeks: **all 10 advertised tabs
+are populated, and the reviewer does not certify an empty workbook** (empty-workbook
+regression: 0 FC on both substantive tabs, 12 NO). No tab-wiring defect, no
+`dashboard.py` crash, no advertised-but-absent tab.
+
+### What's good
+
+- Tab count is honest: 10 advertised, 10 emitted, all carrying data.
+- The `tsc_reader.py` contract holds. `05_TSR_Catalog`, `00_Title_Page` and
+  `03_System_Architecture` are all read at the row/column offsets `tsc-builder` actually
+  writes, and the `HW-TSR`/`SW-TSR` type filter correctly selects 375 of 750 TSRs.
+- ASIL propagates from the parent TSR rather than being defaulted — the output carries
+  `D` (675) and the decomposed `B(D)` (150), which is the upstream decomposition
+  surviving two hops.
+- The reviewer's HWSRA check 4 (*allocated HW element specified, no `<TBD>`*) correctly
+  rates **PC**, and check 10 (test strategy coverage) **LC**. These are real, sensitive
+  verdicts, not hard-coded passes — confirmed by the empty-workbook run moving them.
+
+### What was fixed today
+
+**1. `hw_sr_overrides` was silently dropped in its entirety — the shipped example
+demonstrated a dead feature. (severity: high; fixed)**
+
+`derive_hw_srs_from_tsr` looks up `overrides[tsr_id]` by exact string match.
+`tsc-builder` emits **four**-segment HW-TSR IDs (`TSR-001-01-01`), but the shipped
+`examples/sample_hw_sr_input_esc.json` keyed its two overrides on a stale **three**-segment
+format (`TSR-001-01`) that the upstream builder no longer produces. Every override missed.
+
+The failure was completely silent: exit 0, no warning, and a summary reporting
+`hw_srs_derived: 825` as though the refinement had been applied. The generic
+`<TBD: ADC_CHx>` template stayed in place, and the analyst's override text, allocated
+element and DC% target vanished. This is the `#54` class of defect — a documented input
+path that accepts data and discards it — and it defeats the entire purpose of the input
+JSON, which SKILL.md describes as the source of truth.
+
+Fix, in two parts:
+
+- `scripts/generate_hw_safety_reqs.py` now records which override keys are consumed
+  (`OVERRIDES_APPLIED`) and reports the rest. The summary gained
+  `overrides_supplied` / `overrides_applied` / `overrides_unmatched`, and unmatched keys
+  raise a stderr `WARNING` that names each one and suggests near-matches by prefix, so
+  future ID-format drift on either side of the chain surfaces immediately:
+
+  ```
+  WARNING: 2 of 2 hw_sr_overrides matched no HW-TSR in TSC.xlsx and were NOT applied:
+    - parent_hw_tsr 'TSR-001-01'  did you mean: TSR-001-01-01
+    - parent_hw_tsr 'TSR-001-02'  did you mean: TSR-001-02-01
+  ```
+
+  The general defence was written before the specific correction deliberately: the
+  warning is what stops this recurring anywhere in the chain, whereas fixing only the
+  sample would have left the next drift just as silent.
+
+- `examples/sample_hw_sr_input_esc.json` re-keyed to the IDs `tsc-builder` actually
+  emits. Overrides now land: `overrides_applied: 2`, and a cell scan finds all four
+  input-only strings (`MCU_ADC_CH0` at `03_HW_Safety_Requirements!D5`, `MCU_CMP_01` at
+  `D6`, plus both override requirement texts at `E5`/`E6`).
+
+**2. Stale absolute path in the shipped example. (severity: low; fixed)**
+
+`linked_tsc` pointed at `/sessions/vigilant-ecstatic-maxwell/mnt/CL work/...` — an
+unrelated machine's session directory, baked into a shipped fixture. Replaced with the
+placeholder `<path to TSC xlsx produced by tsc-builder>`.
+
+**3. `__pycache__` hygiene. (caught during repack, not shipped)**
+
+The first repack attempt swept a `scripts/__pycache__/tsc_reader.cpython-310.pyc`
+generated by my own test runs into the archive. Repacked with `-x '*__pycache__*' '*.pyc'`
+and `-D`, then verified the archive's file list is byte-identical to `HEAD` and that
+exactly the two intended payload files differ. **Worth generalising: any future POLISH
+run that executes a builder before repacking it can leak `.pyc` files into a shipped
+archive.** This belongs in the carried `scripts/` invariant lint as a sixth invariant.
+
+### Findings NOT fixed today (filed, not repaired)
+
+- **`03_HW_Safety_Requirements` column 8 `Verification Method` is `<TBD>` in 825/825
+  rows** — an entirely dead column. Reviewer check 8 (*does each HW-SR have at least one
+  verification method?*) rates **FC** regardless, because it reads the real `++`/`None`
+  matrix on `06_Verification_Methods` instead. So the verdict is defensible, but the
+  column on tab 03 is pure placeholder and either needs populating from tab 06 or
+  removing. Small, but it is an authoring change with a schema decision attached.
+- **Reviewer ships 48 checks but advertises 29.** `SKILL.md` claims "14 doc-quality / 12
+  ISO 26262-5 §6 / **3** HW-SR-specific"; the Verification Assessment tab actually
+  carries **22**. This is standing item 9 (advertised vs shipped check counts) — but
+  *inverted*: every previous instance was over-advertising checks that did not exist, and
+  this one under-advertises by 19. The standing item's framing should be widened from
+  "phantom checks" to "count drift in either direction".
+- **23 of 48 checks rate `PENDING`** (6 CR, 1 HWSRA, 16 VA). `PENDING` is implemented
+  throughout `dashboard.py` and `generate_checklist.py` as a deliberate sixth state for
+  human-review items, so this is by design — but `SKILL.md` advertises only the five
+  ratings FC/LC/PC/NO/NA and never mentions it. A reader comparing doc to output would
+  reasonably think the tool had failed. One-line doc fix, left for the DOCS slot.
+- `07_Test_Strategy` (9 rows) and `08_Independence_Considerations` (12 rows) are pure
+  `<TBD>` scaffolds with no input path at all — there is no JSON key that populates
+  either. Defensible as analyst worksheets, and SKILL.md does describe them as
+  scaffolds, but they are the natural next enhancement and the `#57` `_g()` /
+  `write_rows()` helper pattern applies directly.
+
+### Verification performed
+
+| Check | Result |
+|---|---|
+| Upstream chain builds (HARA → FSC → TSC) | clean, exit 0 |
+| Builder on real TSC, stale sample | **warns**, `overrides_applied: 0`, exit 0 |
+| Builder on real TSC, fixed sample | `overrides_applied: 2`, `overrides_unmatched: []` |
+| Cell scan for input-only strings | 4/4 found at expected coordinates |
+| Reviewer over builder output | runs; 21 FC / 1 LC / 1 PC / 1 NO / 1 NA / 23 PENDING |
+| Reviewer over empty workbook (regression) | 2 FC / 2 PC / 12 NO / 8 NA — does **not** certify |
+| Repack → extract → rerun from clean dir | identical summary; archive file list identical to `HEAD` |
+| Payload diff vs `HEAD` | exactly 2 files differ, both intended |
+
+`hw_srs_derived` legitimately moves 825 → 821: each applied override collapses a
+three-SR template into a single explicit SR, so two overrides remove four template rows.

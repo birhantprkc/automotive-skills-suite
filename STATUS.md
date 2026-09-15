@@ -1,6 +1,6 @@
 # Skill Suite Status
 
-_Regenerated 2026-09-08 by autonomous daily run (`scripts/regen_status.py`)._
+_Regenerated 2026-09-15 by autonomous daily run (`scripts/regen_status.py`)._
 
 | Builder | Domain | Paired Reviewer | Last Touched | Flag |
 |---|---|---|---|---|
@@ -21,11 +21,11 @@ _Regenerated 2026-09-08 by autonomous daily run (`scripts/regen_status.py`)._
 | autosar-swc-builder.skill | autosar | autosar-swc-checklist-reviewer.skill | 2026-05-21 | 🟡 |
 | bus-load-analysis-builder.skill | comms | bus-load-analysis-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | calibration-data-exchange-builder.skill | calibration | calibration-data-exchange-checklist-reviewer.skill | 2026-05-02 | 🟡 |
-| cdd-builder.skill | diagnostics | cdd-checklist-reviewer.skill | 2026-08-11 | 🟢 |
+| cdd-builder.skill | diagnostics | cdd-checklist-reviewer.skill | 2026-08-11 | 🟡 |
 | change-impact-analysis-builder.skill | program-mgmt | change-impact-analysis-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | communication-matrix-builder.skill | comms | communication-matrix-checklist-reviewer.skill | 2026-06-24 | 🟡 |
 | control-plan-builder.skill | quality | control-plan-checklist-reviewer.skill | 2026-06-18 | 🟡 |
-| cs-architecture-builder.skill | cyber | cs-architecture-checklist-reviewer.skill | 2026-08-12 | 🟢 |
+| cs-architecture-builder.skill | cyber | cs-architecture-checklist-reviewer.skill | 2026-08-12 | 🟡 |
 | cs-concept-builder.skill | cyber | cs-concept-checklist-reviewer.skill | 2026-07-21 | 🟡 |
 | cs-goals-builder.skill | cyber | cs-goals-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | dbc-builder.skill | comms | dbc-checklist-reviewer.skill | 2026-05-02 | 🟡 |
@@ -59,7 +59,7 @@ _Regenerated 2026-09-08 by autonomous daily run (`scripts/regen_status.py`)._
 | safety-plan-builder.skill | safety | safety-plan-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | safety-program-risk-register-builder.skill | program-mgmt | safety-program-risk-register-checklist-reviewer.skill | 2026-08-06 | 🟡 |
 | secure-coding-guidelines-builder.skill | cyber | secure-coding-guidelines-checklist-reviewer.skill | 2026-05-01 | 🟡 |
-| sotif-analysis-builder.skill | sotif | sotif-analysis-checklist-reviewer.skill | 2026-08-11 | 🟢 |
+| sotif-analysis-builder.skill | sotif | sotif-analysis-checklist-reviewer.skill | 2026-08-11 | 🟡 |
 | sotif-validation-strategy-builder.skill | sotif | sotif-validation-strategy-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | spc-chart-builder.skill | quality | spc-chart-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | sw-arch-builder.skill | safety | sw-arch-checklist-reviewer.skill | 2026-05-01 | 🟡 |
@@ -72,7 +72,7 @@ _Regenerated 2026-09-08 by autonomous daily run (`scripts/regen_status.py`)._
 | sysml-state-machine-builder.skill | sysml | sysml-state-machine-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | tara-builder.skill | cyber | tara-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | test-case-catalog-builder.skill | v&v | test-case-catalog-checklist-reviewer.skill | 2026-05-02 | 🟡 |
-| traceability-matrix-builder.skill | v&v | traceability-matrix-checklist-reviewer.skill | 2026-05-02 | 🟡 |
+| traceability-matrix-builder.skill | v&v | traceability-matrix-checklist-reviewer.skill | 2026-09-08 | 🟢 |
 | triggering-conditions-builder.skill | sotif | triggering-conditions-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | tsc-builder.skill | safety | tsc-checklist-reviewer.skill | 2026-07-22 | 🟡 |
 | uds-services-builder.skill | diagnostics | uds-services-checklist-reviewer.skill | 2026-05-26 | 🟡 |
@@ -86,7 +86,7 @@ _Regenerated 2026-09-08 by autonomous daily run (`scripts/regen_status.py`)._
 - Builders: 76 · Reviewers: 76 · Total skill files: 152
 - Paired builders: 76/76 (100%)
 - 🔴 Orphan builders (no reviewer): 0
-- 🟡 Paired but stale (30+ days untouched): 68
-- 🟢 Paired and fresh (≤30 days): 8
+- 🟡 Paired but stale (30+ days untouched): 70
+- 🟢 Paired and fresh (≤30 days): 6
 
 _2 builder(s) paired via `docs/PAIRING_ALIASES.md` rather than filename convention: `item-definition-builder.skill` → `item-def-checklist-reviewer.skill`, `ppap-package-builder.skill` → `ppap-checklist-reviewer.skill`._
