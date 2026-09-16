@@ -1760,3 +1760,40 @@ Housekeeping: `/tmp/automotive-work` deleted cleanly for the second run running.
 - **New (invariant 6):** `scripts/` lint should assert no `__pycache__`/`.pyc` in any `.skill` archive.
 - Carried: sysml JSON-input batch (`activity`, `requirement`, `state-machine`) — deferred from W37 to W38 and still not taken; `regen_status.py` → `max(builder, reviewer)` for `Last Touched`; `scripts/` invariant lint (now six invariants); `sample_input.json` missing for two mbse builders; `Bus Interfaces` check in `autosar-bsw-config`; the 24 reviewers whose obligation literal lives outside `check_definitions.py`; the `#46` audit re-scope (its builder-to-reviewer exclusion remains falsified).
 - **Human:** `v2026.09.W36` is still tagged and pushed but **not published** — review `RELEASES.md` and click Publish. Duplicate v&v labels (`v-and-v` in use, `vv` unused) still need one deleted. And the scheduled task did not fire 09-09 through 09-14 — worth checking why, since six of seven modes were skipped.
+
+## 2026-09-16 (autonomous run, POLISH)
+
+**Mode:** POLISH
+**Action:** Repaired cs-goals-builder's TARA reader — header aliasing + asset resolution; goal text and asset were swapped/corrupted on every CSG.
+**Files touched:** `skills/cs-goals-builder.skill`, `docs/skill-polish-log/cs-goals-builder.md` (new), `STATUS.md`, `docs/chain-contract-audit.md`
+**Tests:** N/A (no test suite in this repo yet) — verified by end-to-end chain execution, see below
+**Skill count:** 76 builders / 76 reviewers / 100% paired
+**Open issues:** 0
+**Notes:** Zero open issues this morning — every W37 target (#59–#61) is closed — so target
+selection fell through to priority (3), least-recently-touched. Picked `cs-goals-builder`
+(untouched since 2026-05-01, never polished) over the other eight 2026-05-01 candidates because
+it is the *producer* in a chain whose consumer, `cs-concept-builder`, was polished on 2026-09-08;
+a broken producer means that earlier polish was validated against corrupt input. That hunch paid
+off. `tara_reader.py` resolved CSG-tab columns by snake_case name with positional fallbacks,
+but `tara-builder` emits human-readable headers, so `asset` and `cs_goal_text` never matched an
+alias and silently took columns 3 and 4 — every goal's text became a bare risk integer ("5") and
+the asset column held the goal text. Fixed with a name-alias table, and `_build_asset_index()`
+to recover real asset names via 05_Threat_Scenarios → 04_Asset_Inventory, since the upstream CSG
+tab carries no asset column at all. Also fixed a silent risk-value downgrade (any float or
+numeric string collapsed to 3, quietly turning CAL 4 into CAL 2 — same shape as yesterday's
+hw-safety-reqs "silently dropped" fix) and an `AttributeError` on non-string header cells.
+Two judgement calls worth flagging: I did **not** fix the hardcoded
+`Cybersecurity_Property = "Confidentiality"` on all 15 CSGs (follow-up A) even though the
+STRIDE→property mapping is unambiguous, because it requires threading a new field through a
+payload schema that three downstream skills read — too wide for a Wednesday slot. And the
+column-shift I noticed in `cs-concept-builder`'s 02_CS_Goals_Echo (follow-up B) belongs to
+another skill and was left alone. The uncomfortable finding is D: `chain_contract_audit.py`
+reported 0 BREAK on this chain the whole time it was corrupt, because it only asserts that a
+referenced *tab* exists, never that the columns line up. That is a blind spot across all 16
+chains, not just this one.
+**Follow-ups:**
+- Next `cyber` polish: derive `Cybersecurity_Property` from STRIDE category instead of hardcoding Confidentiality (follow-up A, HIGH).
+- Open an issue for the `cs-concept-builder` 02_CS_Goals_Echo header/data column shift (follow-up B, MED).
+- Consider extending `chain_contract_audit.py` to a column-level assertion — highest-leverage tooling change available, would retro-catch this class across all 16 chains (follow-up D).
+- Reconcile `_suggest_cal()` with the safety-impact heuristic documented in SKILL.md (follow-up C, LOW).
+- Monday PLAN has an empty issue backlog to fill; the four follow-ups above are ready-made candidates.

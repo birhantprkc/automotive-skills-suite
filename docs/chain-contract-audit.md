@@ -1,6 +1,6 @@
 # Chain-contract audit — builder-to-builder xlsx handoffs
 
-_Generated 2026-09-03 by `scripts/chain_contract_audit.py` (read-only; modifies no `.skill` file)._
+_Generated 2026-09-16 by `scripts/chain_contract_audit.py` (read-only; modifies no `.skill` file)._
 
 Scope is builder-to-builder reads only, per the W34 descope of [#46](https://github.com/jherrodthomas/automotive-skills-suite/issues/46). Builder-to-reviewer pairs are excluded: a reviewer ships with the builder it reviews, so the two cannot drift apart the way #43 did.
 
@@ -9,11 +9,11 @@ Scope is builder-to-builder reads only, per the W34 descope of [#46](https://git
 - Builders scanned: **76**
 - Cross-skill reader scripts found: **15** (in 13 skills)
 - Declared chains audited: **16**
-- Sheet-name assertions checked: **46**
+- Sheet-name assertions checked: **48**
 
 | Verdict | Count |
 |---|---|
-| MATCH | 41 |
+| MATCH | 43 |
 | ALIAS | 4 |
 | FALLBACK | 1 |
 | SELF-AMBIG | 0 |
@@ -28,7 +28,7 @@ Scope is builder-to-builder reads only, per the W34 descope of [#46](https://git
 |---|---|---|---|
 | `cs-architecture-builder` | `cs-concept-builder` | 7 | ALIAS |
 | `cs-concept-builder` | `cs-goals-builder` | 1 | MATCH |
-| `cs-goals-builder` | `tara-builder` | 2 | MATCH |
+| `cs-goals-builder` | `tara-builder` | 4 | MATCH |
 | `fmeda-builder` | `tsc-builder` | 2 | ALIAS |
 | `fsc-builder` | `hara-builder` | 2 | MATCH |
 | `hsi-builder` | `tsc-builder` | 1 | MATCH |
@@ -57,8 +57,10 @@ Scope is builder-to-builder reads only, per the W34 descope of [#46](https://git
 | MATCH | `cs-architecture-builder` | `scripts/cs_concept_reader.py`:25 | `(module constant)` | `cs-concept-builder` | `02_CS_Goals_Echo` |  |
 | MATCH | `cs-architecture-builder` | `scripts/cs_concept_reader.py`:26 | `(module constant)` | `cs-concept-builder` | `00_Title_Page` |  |
 | MATCH | `cs-concept-builder` | `scripts/cs_goals_reader.py`:16, 17 | `read_cs_goals` | `cs-goals-builder` | `00_Title_Page` |  |
-| MATCH | `cs-goals-builder` | `scripts/tara_reader.py`:47, 48 | `read_tara_xlsx` | `tara-builder` | `11_Cybersecurity_Goals` |  |
-| MATCH | `cs-goals-builder` | `scripts/tara_reader.py`:51, 52 | `read_tara_xlsx` | `tara-builder` | `09_Risk_Determination` |  |
+| MATCH | `cs-goals-builder` | `scripts/tara_reader.py`:49, 50 | `read_tara_xlsx` | `tara-builder` | `11_Cybersecurity_Goals` |  |
+| MATCH | `cs-goals-builder` | `scripts/tara_reader.py`:53, 55 | `read_tara_xlsx` | `tara-builder` | `09_Risk_Determination` |  |
+| MATCH | `cs-goals-builder` | `scripts/tara_reader.py`:134, 135 | `_build_asset_index` | `tara-builder` | `04_Asset_Inventory` |  |
+| MATCH | `cs-goals-builder` | `scripts/tara_reader.py`:142, 143 | `_build_asset_index` | `tara-builder` | `05_Threat_Scenarios` |  |
 | MATCH | `fmeda-builder` | `scripts/tsc_reader.py`:29 | `(module constant)` | `tsc-builder` | `04_Safety_Mechanism_Catalog` |  |
 | MATCH | `fsc-builder` | `scripts/generate_fsc.py`:203, 204 | `read_hara` | `hara-builder` | `00_Title_Page` |  |
 | MATCH | `fsc-builder` | `scripts/generate_fsc.py`:218, 220 | `read_hara` | `hara-builder` | `13_Safety_Goals` |  |

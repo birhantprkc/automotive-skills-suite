@@ -1,6 +1,6 @@
 # Skill Suite Status
 
-_Regenerated 2026-09-15 by autonomous daily run (`scripts/regen_status.py`)._
+_Regenerated 2026-09-16 by autonomous daily run (`scripts/regen_status.py`)._
 
 | Builder | Domain | Paired Reviewer | Last Touched | Flag |
 |---|---|---|---|---|
@@ -42,7 +42,7 @@ _Regenerated 2026-09-15 by autonomous daily run (`scripts/regen_status.py`)._
 | hara-builder.skill | safety | hara-checklist-reviewer.skill | 2026-07-22 | 🟡 |
 | hsi-builder.skill | safety | hsi-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | hw-architecture-builder.skill | safety | hw-architecture-checklist-reviewer.skill | 2026-05-01 | 🟡 |
-| hw-safety-reqs-builder.skill | safety | hw-safety-reqs-checklist-reviewer.skill | 2026-05-01 | 🟡 |
+| hw-safety-reqs-builder.skill | safety | hw-safety-reqs-checklist-reviewer.skill | 2026-09-15 | 🟢 |
 | incident-response-plan-builder.skill | cyber | incident-response-plan-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | item-definition-builder.skill | safety | item-def-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | ldf-builder.skill | comms | ldf-checklist-reviewer.skill | 2026-05-02 | 🟡 |
@@ -86,7 +86,7 @@ _Regenerated 2026-09-15 by autonomous daily run (`scripts/regen_status.py`)._
 - Builders: 76 · Reviewers: 76 · Total skill files: 152
 - Paired builders: 76/76 (100%)
 - 🔴 Orphan builders (no reviewer): 0
-- 🟡 Paired but stale (30+ days untouched): 70
-- 🟢 Paired and fresh (≤30 days): 6
+- 🟡 Paired but stale (30+ days untouched): 69
+- 🟢 Paired and fresh (≤30 days): 7
 
 _2 builder(s) paired via `docs/PAIRING_ALIASES.md` rather than filename convention: `item-definition-builder.skill` → `item-def-checklist-reviewer.skill`, `ppap-package-builder.skill` → `ppap-checklist-reviewer.skill`._
