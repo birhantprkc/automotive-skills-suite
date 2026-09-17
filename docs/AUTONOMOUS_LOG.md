@@ -1797,3 +1797,17 @@ chains, not just this one.
 - Consider extending `chain_contract_audit.py` to a column-level assertion — highest-leverage tooling change available, would retro-catch this class across all 16 chains (follow-up D).
 - Reconcile `_suggest_cal()` with the safety-impact heuristic documented in SKILL.md (follow-up C, LOW).
 - Monday PLAN has an empty issue backlog to fill; the four follow-ups above are ready-made candidates.
+
+## 2026-09-17 (autonomous run, POLISH)
+
+**Mode:** POLISH
+**Action:** dia-builder/dia-checklist-reviewer first pass — three reader-contract bugs fixed in the reviewer, all producing false findings on the pair's own sample.
+**Files touched:** `skills/dia-checklist-reviewer.skill` (dia_probe.py, check_definitions.py), `docs/skill-polish-log/dia-builder.md`, `STATUS.md`
+**Tests:** N/A (no test suite in this repo yet) — manual round-trip: generate_dia.py on sample_dia_esc.json → generate_checklist.py, verified from a clean extract of the repacked .skill. `scripts/chain_contract_audit.py` still reports 0 BREAK across 48 assertions / 16 chains.
+**Skill count:** 76 builders / 76 reviewers / 100% paired
+**Open issues:** 0
+**Notes:** Open-issue queue is empty and there are no orphan builders, so selection fell through to least-recently-touched; dia-builder (2026-05-01) had no polish log. The builder itself is healthy — runs clean, 12 tabs, frontmatter fine, docs match output. Every defect was on the reviewer side and of one kind: the probe assumed column names and layouts the builder does not emit, then reported a compliance failure rather than a read failure. DIAA-8 and DIAA-14 were stuck at PC and DIAA-4/5 at NO on a correct workbook. Fixed via header aliases, a vertical-layout fallback for the two-column scope tab, and RACI token-splitting for combined `A,R` cells. Two NOs remain and are now **genuine**: the sample JSON gives Safety Plan two Accountables and no Responsible, and Safety Case two `A,R` parties. I did not touch that — whether joint accountability is intended is a contract-semantics call, not a typo fix. **For the human:** decide whether to correct `examples/sample_dia_esc.json` or relax DIAA-4 to allow declared joint accountability.
+**Follow-ups:**
+- Resolve the dual-Accountable question in `examples/sample_dia_esc.json` (needs human call).
+- `_find_header_row` requires >=3 populated cells; any two-column tab in any builder is invisible to its reviewer. Candidate for a suite-wide sweep — likely more silent PC/NO findings of exactly this shape.
+- No builder-output-through-reviewer-probe regression harness exists. These bugs lived 4.5 months. Worth a PLAN target.

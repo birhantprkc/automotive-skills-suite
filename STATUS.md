@@ -1,6 +1,6 @@
 # Skill Suite Status
 
-_Regenerated 2026-09-16 by autonomous daily run (`scripts/regen_status.py`)._
+_Regenerated 2026-09-17 by autonomous daily run (`scripts/regen_status.py`)._
 
 | Builder | Domain | Paired Reviewer | Last Touched | Flag |
 |---|---|---|---|---|
@@ -27,7 +27,7 @@ _Regenerated 2026-09-16 by autonomous daily run (`scripts/regen_status.py`)._
 | control-plan-builder.skill | quality | control-plan-checklist-reviewer.skill | 2026-06-18 | 🟡 |
 | cs-architecture-builder.skill | cyber | cs-architecture-checklist-reviewer.skill | 2026-08-12 | 🟡 |
 | cs-concept-builder.skill | cyber | cs-concept-checklist-reviewer.skill | 2026-07-21 | 🟡 |
-| cs-goals-builder.skill | cyber | cs-goals-checklist-reviewer.skill | 2026-05-01 | 🟡 |
+| cs-goals-builder.skill | cyber | cs-goals-checklist-reviewer.skill | 2026-09-16 | 🟢 |
 | dbc-builder.skill | comms | dbc-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | dcm-builder.skill | calibration | dcm-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | dem-config-builder.skill | diagnostics | dem-config-checklist-reviewer.skill | 2026-05-02 | 🟡 |
@@ -86,7 +86,7 @@ _Regenerated 2026-09-16 by autonomous daily run (`scripts/regen_status.py`)._
 - Builders: 76 · Reviewers: 76 · Total skill files: 152
 - Paired builders: 76/76 (100%)
 - 🔴 Orphan builders (no reviewer): 0
-- 🟡 Paired but stale (30+ days untouched): 69
-- 🟢 Paired and fresh (≤30 days): 7
+- 🟡 Paired but stale (30+ days untouched): 68
+- 🟢 Paired and fresh (≤30 days): 8
 
 _2 builder(s) paired via `docs/PAIRING_ALIASES.md` rather than filename convention: `item-definition-builder.skill` → `item-def-checklist-reviewer.skill`, `ppap-package-builder.skill` → `ppap-checklist-reviewer.skill`._
