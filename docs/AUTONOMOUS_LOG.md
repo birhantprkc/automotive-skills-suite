@@ -1811,3 +1811,19 @@ chains, not just this one.
 - Resolve the dual-Accountable question in `examples/sample_dia_esc.json` (needs human call).
 - `_find_header_row` requires >=3 populated cells; any two-column tab in any builder is invisible to its reviewer. Candidate for a suite-wide sweep — likely more silent PC/NO findings of exactly this shape.
 - No builder-output-through-reviewer-probe regression harness exists. These bugs lived 4.5 months. Worth a PLAN target.
+
+## 2026-09-18 (autonomous run, DOCS)
+
+**Mode:** DOCS
+**Action:** Rolled the W37+W38 `[Unreleased]` changelog section (two weeks, five missed runs reconciled) and wrote four example READMEs against the archives.
+**Files touched:** `CHANGELOG.md`, `STATUS.md`, `examples/hw-safety-reqs-builder/README.md`, `examples/cs-goals-builder/README.md`, `examples/dia-checklist-reviewer/README.md`, `examples/traceability-matrix-checklist-reviewer/README.md`, `docs/AUTONOMOUS_LOG.md`
+**Tests:** N/A (no test suite in this repo yet) — verification for this run was re-deriving every count cited in the new docs from the archives themselves rather than from SKILL.md prose.
+**Skill count:** 76 builders / 76 reviewers / 100% paired (68 stale, 8 fresh, 0 orphan)
+**Open issues:** 0
+**Notes:** The headline is scheduling, not content. Reconstructing the fortnight from the log showed **five runs never fired**: W37 lost its Wed/Thu POLISH, Friday DOCS and Saturday RELEASE, and W38 lost its Monday PLAN. That means two of W37's three opened targets (#60, #61) were never worked, no `v2026.09.W37` tag exists, and `[Unreleased]` had been accumulating since 2026-09-05 — so this roll covers two weeks, and W37's `traceability-matrix-checklist-reviewer` README (owed by the skipped W37 DOCS run) was picked up here. The open-issue queue reading 0 is not a quiet backlog: #59–#61 were closed outside the automation, so the three W38 POLISH runs all fell through to rule (c). On content the week was unusually clean. Every count I re-derived from source matched what SKILL.md advertises — dia reviewer 14 CR + 14 DIAA + 5 VA = 33, cs-goals 8 tabs, hw-safety-reqs 10 tabs — the first docs roll since W33 to find **no** drift, which is a real signal that the drift-hunting of the last five weeks worked. Judgement calls: I wrote substantive READMEs rather than the five-line template stubs the mode nominally prescribes, because the material existed in this week's polish logs and a stub would have discarded it; and I recorded the `__pycache__` contamination in `traceability-matrix-checklist-reviewer.skill` instead of fixing it, since repacking an archive is POLISH work.
+**Follow-ups:**
+- **For the human — the automation is missing runs.** Five skipped slots in ten working days, twice as many as the 2026-08-27 outage. Worth checking whether the scheduled task is firing at all on Mondays and weekends before the next release window.
+- No `v2026.09.W37` tag; tomorrow's RELEASE run will be cutting a two-week tag again. `[Unreleased]` is already written for it.
+- Two W37 targets (#60 mbse wiring, #61 test-case-catalog / flexray-config) were opened, closed and never worked. They should be re-opened by Monday's PLAN, not assumed done.
+- Suite-wide `__pycache__` scan across all 152 archives — one confirmed instance found incidentally today.
+- Two carried structural items still unslotted: `_find_header_row`'s ≥3-cell requirement hiding every two-column tab from its reviewer, and `chain_contract_audit.py` being tab-level only.
