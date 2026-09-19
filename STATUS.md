@@ -1,6 +1,6 @@
 # Skill Suite Status
 
-_Regenerated 2026-09-18 by autonomous daily run (`scripts/regen_status.py`)._
+_Regenerated 2026-09-19 by autonomous daily run (`scripts/regen_status.py`)._
 
 | Builder | Domain | Paired Reviewer | Last Touched | Flag |
 |---|---|---|---|---|
@@ -36,7 +36,7 @@ _Regenerated 2026-09-18 by autonomous daily run (`scripts/regen_status.py`)._
 | dtc-catalog-builder.skill | diagnostics | dtc-catalog-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | fishbone-builder.skill | quality | fishbone-checklist-reviewer.skill | 2026-05-01 | 🟡 |
 | flexray-config-builder.skill | comms | flexray-config-checklist-reviewer.skill | 2026-05-02 | 🟡 |
-| fmeda-builder.skill | safety | fmeda-checklist-reviewer.skill | 2026-08-19 | 🟢 |
+| fmeda-builder.skill | safety | fmeda-checklist-reviewer.skill | 2026-08-19 | 🟡 |
 | fsc-builder.skill | safety | fsc-checklist-reviewer.skill | 2026-07-22 | 🟡 |
 | gateway-routing-builder.skill | comms | gateway-routing-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | hara-builder.skill | safety | hara-checklist-reviewer.skill | 2026-07-22 | 🟡 |
@@ -86,7 +86,7 @@ _Regenerated 2026-09-18 by autonomous daily run (`scripts/regen_status.py`)._
 - Builders: 76 · Reviewers: 76 · Total skill files: 152
 - Paired builders: 76/76 (100%)
 - 🔴 Orphan builders (no reviewer): 0
-- 🟡 Paired but stale (30+ days untouched): 68
-- 🟢 Paired and fresh (≤30 days): 8
+- 🟡 Paired but stale (30+ days untouched): 69
+- 🟢 Paired and fresh (≤30 days): 7
 
 _2 builder(s) paired via `docs/PAIRING_ALIASES.md` rather than filename convention: `item-definition-builder.skill` → `item-def-checklist-reviewer.skill`, `ppap-package-builder.skill` → `ppap-checklist-reviewer.skill`._

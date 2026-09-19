@@ -4,6 +4,60 @@ Weekly snapshots of `github.com/jherrodthomas/automotive-skills-suite`. Tags are
 
 ---
 
+## v2026.09.W38 — 2026-09-19
+
+ISO week 38 (2026-09-06 → 2026-09-18). Accumulating since `v2026.09.W36` (2026-09-05) — **two weeks in one tag, for the second release running**. No `v2026.09.W37` tag exists and none is backfilled: the W37 Saturday RELEASE was one of five scheduled runs that did not fire across the fortnight. 7 commits.
+
+### Highlights
+
+- **Four builder/reviewer pairs repaired, and every defect was the same shape: a documented input path that accepts analyst data and silently discards it.** `traceability-matrix` (input never reached 11 advertised tabs, reviewer certified the empty result), `hw-safety-reqs-builder` (`hw_sr_overrides` dropped entirely on a four-vs-three-segment HW-TSR ID drift, exit 0), `cs-goals-builder` (TARA columns resolved positionally, so every CSG shipped with the goal text in the Asset column and a risk integer as its goal text), `dia-checklist-reviewer` (three false findings from probe assumptions about layouts the builder does not emit). None raised an exception; all four had been shipping for months.
+- **The verdict on tooling is harsher than the fix list.** `chain_contract_audit.py` reported 0 BREAK across all 16 chains for the entire time the `tara-builder` → `cs-goals-builder` payload was corrupt, because it asserts that a referenced *tab* exists and never that the columns line up. The week's own fixes are the argument for a column-level assertion — it is the single highest-leverage change available and would retro-catch this class suite-wide.
+- **Five scheduled runs did not fire (09-09 Wed → 09-14 Mon).** W37 lost its Wed/Thu POLISH, Friday DOCS and Saturday RELEASE; W38 lost its Monday PLAN. Consequences carried into this snapshot: two W37 targets (#60 mbse wiring, #61 sheet-name confirmations) were opened, closed `completed` by the human on 09-11, and **never worked** — their defects are still in the archives. All three W38 POLISH days selected by rule (c), least-recently-touched, because there was no plan and no open issues.
+
+### Changes this week
+
+**triage**
+- `a92088c` auto(triage): 12 issues reviewed, 5 stale commented, no low-confidence labels applied
+
+**plan**
+- `f95f4c9` auto(plan): W37 opens #59-#61, obligation hypothesis disproved, sysml batch deferred — the pre-slotting audit killed a hypothesis three previous plans had carried (the `Shall`/`Must` `REJECTED` gate is dead in 3 archives, not 76), collapsing a would-be batch target into a three-line add
+
+**polish**
+- `302660e` auto(polish): #59 traceability pair repaired, 11 tabs wired, empty workbook no longer passes
+- `a8f430d` auto(polish): hw-safety-reqs overrides silently dropped on TSR ID drift, now applied and warned
+- `a2af2f1` auto(polish): cs-goals-builder read TARA by header name, goal text and asset no longer swapped
+- `9170271` auto(polish): dia reviewer misread joint reviews, scope and combined RACI cells
+
+**docs**
+- `54e46b3` auto(docs): W37+W38 changelog rolled, four example READMEs, five missed runs reconciled — four example READMEs written against the archives, and the first docs roll since W33 to find **no** check-count drift
+
+**release** _(this snapshot commit)_
+- `STATUS.md` regenerated (76/76 paired, 7 fresh / 69 stale / 0 orphan — `fmeda-builder` aged out of the 30-day window overnight)
+- `RELEASES.md` appended with this W38 section
+- `CHANGELOG.md` `[Unreleased]` rolled into a dated `[v2026.09.W38]` section
+- `docs/AUTONOMOUS_LOG.md` updated with the RELEASE-mode entry
+
+### Skills inventory
+
+- Builders: **76** · Reviewers: **76** · Paired ratio: **100.0%** (76/76, 2 via `docs/PAIRING_ALIASES.md`)
+- Freshness: 7 🟢 · 69 🟡 · 0 🔴
+- Domain spread: safety 15, quality 10, comms 8, cyber 6, autosar 5, diagnostics 5, program-mgmt 5, v&v 5, aspice 4, sysml 4, calibration 3, mbse 3, sotif 3
+- Archives touched this snapshot window: 4 (`traceability-matrix-builder`, `traceability-matrix-checklist-reviewer`, `hw-safety-reqs-builder`, `cs-goals-builder`, `dia-checklist-reviewer` — 5 files across 4 pairs)
+
+### Open issues at snapshot
+
+**0 open.** The human closed all 15 on 2026-09-11 after six consecutive plans cited the queue. Two caveats for the reader: #60 and #61 were closed `completed` without ever being worked, and the four follow-ups raised in the `cs-goals-builder` and `dia-checklist-reviewer` polish logs were never filed because the queue tooling was not exercised this fortnight. An empty issue list here means *unfiled*, not *done*.
+
+### Known issues carried into this tag
+
+Six items are listed under **Known issues** in the `[v2026.09.W38]` `CHANGELOG.md` section and are not repeated here. The two structural ones worth a human's attention before the next plan: `_find_header_row` requires ≥3 populated cells, which makes every two-column tab in any builder invisible to its paired reviewer; and no regression harness runs builder output through the paired reviewer's probe, which is the exact shape of all four defects fixed this fortnight.
+
+### Compare
+
+https://github.com/jherrodthomas/automotive-skills-suite/compare/v2026.09.W36...v2026.09.W38
+
+---
+
 ## v2026.09.W36 — 2026-09-05
 
 ISO week 36 (2026-08-24 → 2026-09-05). Accumulating since `v2026.08.W34` (2026-08-22) — **two weeks in one tag**. The scheduled run died after 2026-08-27 and missed the W35 Friday DOCS roll and the W35 Saturday RELEASE, so no `v2026.08.W35` tag exists and none is backfilled here.

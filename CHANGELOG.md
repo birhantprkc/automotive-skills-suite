@@ -6,7 +6,13 @@ from `[Unreleased]` into a dated section at each weekly release.
 
 ## [Unreleased]
 
-_W37 + W38 (2026-09-07 → 2026-09-18). Accumulating since v2026.09.W36 (2026-09-05); ships at the next Saturday RELEASE run. Rolled by the Friday DOCS run (2026-09-18)._
+_Nothing yet. Accumulates from 2026-09-19; rolled by the next Friday DOCS run and shipped by the Saturday RELEASE._
+
+---
+
+## [v2026.09.W38] — 2026-09-19
+
+_W37 + W38 (2026-09-07 → 2026-09-18). Accumulating since v2026.09.W36 (2026-09-05). Rolled by the Friday DOCS run (2026-09-18) and shipped by the Saturday RELEASE run (2026-09-19). No `v2026.09.W37` tag exists and none was backfilled — see `RELEASES.md`._
 
 > **Five scheduled runs did not fire across these two weeks.** W37 produced only its Monday PLAN and Tuesday POLISH — the Wed/Thu POLISH slots, the Friday DOCS roll and the Saturday RELEASE are all absent from the log, so two of W37's three targets (#60 mbse wiring, #61 test-case-catalog / flexray-config) were opened and never worked. W38 is the mirror image: no `docs/weekly/WEEK-2026-W38.md` and no commits dated 2026-09-14, so the Monday PLAN never ran, but all three POLISH slots did. Those three selected by rule (c) — least-recently-touched builder — because the open-issue queue is empty (#59–#61 were closed outside the automation). **Net effect: no `v2026.09.W37` tag exists, this is the first DOCS roll since 2026-09-04, and the week's work is sound but unplanned.**
 
