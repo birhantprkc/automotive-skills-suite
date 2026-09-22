@@ -1,6 +1,6 @@
 # Skill Suite Status
 
-_Regenerated 2026-09-21 by autonomous daily run (`scripts/regen_status.py`)._
+_Regenerated 2026-09-22 by autonomous daily run (`scripts/regen_status.py`)._
 
 | Builder | Domain | Paired Reviewer | Last Touched | Flag |
 |---|---|---|---|---|
@@ -27,7 +27,7 @@ _Regenerated 2026-09-21 by autonomous daily run (`scripts/regen_status.py`)._
 | control-plan-builder.skill | quality | control-plan-checklist-reviewer.skill | 2026-06-18 | 🟡 |
 | cs-architecture-builder.skill | cyber | cs-architecture-checklist-reviewer.skill | 2026-08-12 | 🟡 |
 | cs-concept-builder.skill | cyber | cs-concept-checklist-reviewer.skill | 2026-07-21 | 🟡 |
-| cs-goals-builder.skill | cyber | cs-goals-checklist-reviewer.skill | 2026-09-16 | 🟢 |
+| cs-goals-builder.skill | cyber | cs-goals-checklist-reviewer.skill | 2026-09-22 | 🟢 |
 | dbc-builder.skill | comms | dbc-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | dcm-builder.skill | calibration | dcm-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | dem-config-builder.skill | diagnostics | dem-config-checklist-reviewer.skill | 2026-05-02 | 🟡 |
