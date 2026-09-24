@@ -58,6 +58,11 @@ Read-only. Modifies no `.skill` file.
 
 Usage:  python scripts/chain_contract_audit.py            # writes docs/chain-contract-audit.md
         python scripts/chain_contract_audit.py --stdout   # print instead
+        python scripts/chain_contract_audit.py --check    # also exit 1 on any BREAK
+
+Column level (issue #64): see scripts/column_contract.py. Every reader function
+attributed to an upstream is additionally checked column-by-column against the
+header row the upstream emits for the tab it opens.
 """
 
 from __future__ import annotations
@@ -69,6 +74,9 @@ import sys
 import zipfile
 from datetime import date
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import column_contract as cc  # noqa: E402  (column-level layer, issue #64)
 
 REPO = Path(__file__).resolve().parent.parent
 SKILLS = REPO / "skills"
@@ -82,6 +90,11 @@ EXCLUDED_DIRS = ("/office/",)
 # Add a row here when you open one, so a regeneration keeps the trail.
 KNOWN_ISSUES: dict[tuple[str, str, str], int] = {
     ("fmeda-builder", "tsc-builder", "05_Safety_Mechanisms_From_TSC"): 53,
+}
+
+# Column-level BREAKs that already have an issue. Key: (reader, upstream, tab).
+KNOWN_COL_ISSUES: dict[tuple[str, str, str], int] = {
+    ("cs-concept-builder", "cs-goals-builder", "03_Cybersecurity_Goals"): 65,
 }
 
 # Repo tab-name convention: two digits, optional letter suffix, underscore.
@@ -319,6 +332,42 @@ def main() -> int:
     order = {"BREAK": 0, "UNVERIFIABLE": 1, "SELF-AMBIG": 2, "FALLBACK": 3, "ALIAS": 4, "MATCH": 5}
     findings.sort(key=lambda f: (order[f["verdict"]], f["skill"], f["line"]))
 
+    # ---- Column-level layer (issue #64) ---------------------------------
+    headers_cache = {n: cc.emitted_headers(m) for n, m in members_cache.items()}
+    col_findings: list[dict] = []
+    for skill in sorted(builders):
+        members = members_cache[skill]
+        md_refs = foreign_builders_in_md(members, skill, known)
+        for rel, src in sorted(members.items()):
+            if not rel.endswith(".py") or not is_reader_script(rel, src):
+                continue
+            try:
+                fnames = sorted({n.name for n in ast.walk(ast.parse(src))
+                                 if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))})
+            except SyntaxError as e:
+                up, _ = resolve_upstream(None, rel, md_refs, known)
+                col_findings.append({"skill": skill, "script": rel, "upstream": up or "?", "func": "-",
+                                     "tab": "-", "line": e.lineno or 0, "verdict": "PARSE-ERROR",
+                                     "assertion": "reader parses", "note": str(e.msg)})
+                continue
+            by_up: dict[str, set[str]] = {}
+            for fn in fnames:
+                up, explicit = resolve_upstream(fn, rel, md_refs, known)
+                if up is None or not (explicit or fn.startswith("read")):
+                    continue
+                if is_self_read(skill, fn, rel, up):
+                    continue
+                by_up.setdefault(up, set()).add(fn)
+            for up, fns in sorted(by_up.items()):
+                tabs = sorted(emitted_cache.get(up, set()))
+                raw = cc.reader_contracts(src, lambda n, fns=fns: n in fns, tabs)
+                for v in cc.judge(raw, headers_cache.get(up, {})):
+                    col_findings.append({"skill": skill, "script": rel, "upstream": up, **v})
+    col_rank = {k: i for i, k in enumerate(cc.COL_ORDER)}
+    col_findings.sort(key=lambda f: (col_rank[f["verdict"]], f["skill"], f["script"], f["line"]))
+    col_counts = {k: sum(1 for f in col_findings if f["verdict"] == k) for k in cc.COL_ORDER}
+    col_breaks = [f for f in col_findings if f["verdict"] in cc.COL_BREAKS]
+
     counts = {k: sum(1 for f in findings if f["verdict"] == k) for k in order}
     chains = sorted({(f["skill"], f["upstream"]) for f in findings})
 
@@ -346,6 +395,22 @@ def main() -> int:
     a("|---|---|")
     for k in ["MATCH", "ALIAS", "FALLBACK", "SELF-AMBIG", "UNVERIFIABLE", "BREAK"]:
         a(f"| {k} | {counts[k]} |")
+    a("")
+    a("### Column level ([#64](https://github.com/jherrodthomas/automotive-skills-suite/issues/64))")
+    a("")
+    a(f"- Column/row assertions checked: **{len(col_findings)}** "
+      f"across {len({(f['skill'], f['upstream']) for f in col_findings})} chains")
+    a("")
+    a("| Verdict | Count |")
+    a("|---|---|")
+    for k in reversed(cc.COL_ORDER):
+        a(f"| {k} | {col_counts[k]} |")
+    a("")
+    if col_breaks:
+        a(f"**{len(col_breaks)} column-level BREAK(s)** "
+          f"(`{'`, `'.join(sorted(cc.COL_BREAKS))}`) — see *Column-level contracts* below.")
+        a("")
+    a("### Tab level")
     a("")
     if counts["BREAK"]:
         a(f"**{counts['BREAK']} confirmed BREAK(s).** One issue each — see the table below. "
@@ -388,6 +453,33 @@ def main() -> int:
           f"`{f['func']}` | `{f['upstream']}` | `{f['name']}` | {f['note']} |")
     a("")
 
+    a("## Column-level contracts")
+    a("")
+    a("For every reader function attributed to an upstream, each positional read "
+      "(`ws.cell(r, N)`, `row[i]`) is checked against the header the upstream emits at "
+      "that position, each by-name header lookup against the upstream's header text, and "
+      "each data loop's first row against the upstream's header row. Presence and naming "
+      "only — no values are inspected.")
+    a("")
+    if col_breaks:
+        a("### Column-level BREAKs and their issues")
+        a("")
+        a("| Chain | Tab | Verdict | Assertion | Issue |")
+        a("|---|---|---|---|---|")
+        for f in col_breaks:
+            num = KNOWN_COL_ISSUES.get((f["skill"], f["upstream"], f["tab"]))
+            link = (f"[#{num}](https://github.com/jherrodthomas/"
+                    f"automotive-skills-suite/issues/{num})") if num else "**not yet filed**"
+            a(f"| `{f['skill']}` → `{f['upstream']}` | `{f['tab']}` | {f['verdict']} | "
+              f"{f['assertion']} | {link} |")
+        a("")
+    a("| Verdict | Reader | Script:line | Function | Upstream | Tab | Assertion | Note |")
+    a("|---|---|---|---|---|---|---|---|")
+    for f in col_findings:
+        a(f"| {f['verdict']} | `{f['skill']}` | `{f['script']}`:{f['line']} | `{f['func']}` | "
+          f"`{f['upstream']}` | `{f['tab']}` | {f['assertion']} | {f['note']} |")
+    a("")
+
     if pattern_scans:
         a("## Pattern-scan readers (no fixed contract)")
         a("")
@@ -416,9 +508,27 @@ def main() -> int:
     a("## Method and limits")
     a("")
     a("Static analysis only — no workbook is generated and no generator is executed. "
-      "Specifically, this audit answers *does the upstream emit a tab with this name*, "
-      "not *does that tab have the columns the reader indexes into*. Column-layout "
-      "drift is a real second failure mode and is NOT covered here.")
+      "The tab layer answers *does the upstream emit a tab with this name*. The column "
+      "layer (#64, `scripts/column_contract.py`) answers *does that tab carry, at the "
+      "position and under the name the reader uses, the column it thinks it is reading*, "
+      "and *does the reader's data loop start on the upstream's first data row*.")
+    a("")
+    a("Column-layer limits: emitter headers are resolved only from `style_header_row(...)` "
+      "and `enumerate(headers)` + `ws.cell(ROW, i)` shapes; tabs built any other way are "
+      "UNVERIFIABLE, never guessed. Reader columns are recognised only when a single cell "
+      "read is the value of a dict-literal key. Naming uses token overlap with a small "
+      "abbreviation map (`csg`, `fsr`, `dc`, ...); **COL-WEAK** means no header in the tab "
+      "names the key and is reported for a human, not asserted. A pattern-scan reader "
+      "(`for s in wb.sheetnames`) is resolved to the first upstream tab, in name order, "
+      "that matches its substrings.")
+    a("")
+    a("Column verdicts: **COL-MATCH** header at the read position names the key · "
+      "**COL-SHIFT** it does not, but another header in the tab does (BREAK) · **COL-OOR** "
+      "read past the last header (BREAK) · **ROW-SKIP** data loop starts more than one row "
+      "below the header, so leading data rows are never read (BREAK) · **NAME-MISS** a "
+      "by-name lookup matches no header (BREAK) · **SCAN-MISS** a `wb.sheetnames` "
+      "substring scan matches no upstream tab, so every read under it is dead (BREAK) · "
+      "**PARSE-ERROR** the reader does not parse (BREAK).")
     a("")
     a("Verdict definitions: **MATCH** upstream emits it · **ALIAS** declared legacy "
       "alternative whose preferred sibling matches · **FALLBACK** the same shape "
@@ -432,8 +542,11 @@ def main() -> int:
     else:
         OUT_MD.parent.mkdir(parents=True, exist_ok=True)
         OUT_MD.write_text(text, encoding="utf-8")
-        print(f"{OUT_MD.relative_to(REPO)} written: {len(findings)} assertions, "
-              f"{len(chains)} chains, {counts['BREAK']} BREAK")
+        print(f"{OUT_MD.relative_to(REPO)} written: {len(findings)} tab assertions, "
+              f"{len(chains)} chains, {counts['BREAK']} tab BREAK; "
+              f"{len(col_findings)} column assertions, {len(col_breaks)} column BREAK")
+    if "--check" in sys.argv and (counts["BREAK"] or col_breaks):
+        return 1
     return 0
 
 
