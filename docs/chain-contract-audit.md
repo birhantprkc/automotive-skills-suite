@@ -9,11 +9,11 @@ Scope is builder-to-builder reads only, per the W34 descope of [#46](https://git
 - Builders scanned: **76**
 - Cross-skill reader scripts found: **15** (in 13 skills)
 - Declared chains audited: **16**
-- Sheet-name assertions checked: **48**
+- Sheet-name assertions checked: **50**
 
 | Verdict | Count |
 |---|---|
-| MATCH | 43 |
+| MATCH | 45 |
 | ALIAS | 4 |
 | FALLBACK | 1 |
 | SELF-AMBIG | 0 |
@@ -22,23 +22,23 @@ Scope is builder-to-builder reads only, per the W34 descope of [#46](https://git
 
 ### Column level ([#64](https://github.com/jherrodthomas/automotive-skills-suite/issues/64))
 
-- Column/row assertions checked: **193** across 16 chains
+- Column/row assertions checked: **187** across 15 chains
 
 | Verdict | Count |
 |---|---|
-| COL-MATCH | 130 |
+| COL-MATCH | 128 |
 | NAME-MATCH | 10 |
 | ROW-OK | 23 |
-| COL-WEAK | 14 |
+| COL-WEAK | 13 |
 | UNVERIFIABLE | 0 |
 | NAME-MISS | 0 |
 | COL-OOR | 0 |
-| COL-SHIFT | 14 |
-| ROW-SKIP | 1 |
+| COL-SHIFT | 12 |
+| ROW-SKIP | 0 |
 | SCAN-MISS | 1 |
 | PARSE-ERROR | 0 |
 
-**16 column-level BREAK(s)** (`COL-OOR`, `COL-SHIFT`, `NAME-MISS`, `PARSE-ERROR`, `ROW-SKIP`, `SCAN-MISS`) — see *Column-level contracts* below.
+**13 column-level BREAK(s)** (`COL-OOR`, `COL-SHIFT`, `NAME-MISS`, `PARSE-ERROR`, `ROW-SKIP`, `SCAN-MISS`) — see *Column-level contracts* below.
 
 ### Tab level
 
@@ -49,7 +49,7 @@ Scope is builder-to-builder reads only, per the W34 descope of [#46](https://git
 | Reader | Upstream | Assertions | Worst verdict |
 |---|---|---|---|
 | `cs-architecture-builder` | `cs-concept-builder` | 7 | ALIAS |
-| `cs-concept-builder` | `cs-goals-builder` | 1 | MATCH |
+| `cs-concept-builder` | `cs-goals-builder` | 3 | MATCH |
 | `cs-goals-builder` | `tara-builder` | 4 | MATCH |
 | `fmeda-builder` | `tsc-builder` | 2 | ALIAS |
 | `fsc-builder` | `hara-builder` | 2 | MATCH |
@@ -78,7 +78,9 @@ Scope is builder-to-builder reads only, per the W34 descope of [#46](https://git
 | MATCH | `cs-architecture-builder` | `scripts/cs_concept_reader.py`:24 | `(module constant)` | `cs-concept-builder` | `06_CAL_Allocation` |  |
 | MATCH | `cs-architecture-builder` | `scripts/cs_concept_reader.py`:25 | `(module constant)` | `cs-concept-builder` | `02_CS_Goals_Echo` |  |
 | MATCH | `cs-architecture-builder` | `scripts/cs_concept_reader.py`:26 | `(module constant)` | `cs-concept-builder` | `00_Title_Page` |  |
-| MATCH | `cs-concept-builder` | `scripts/cs_goals_reader.py`:16, 17 | `read_cs_goals` | `cs-goals-builder` | `00_Title_Page` |  |
+| MATCH | `cs-concept-builder` | `scripts/cs_goals_reader.py`:75, 77 | `_threat_descriptions` | `cs-goals-builder` | `02_TARA_Echo` |  |
+| MATCH | `cs-concept-builder` | `scripts/cs_goals_reader.py`:95, 96 | `read_cs_goals` | `cs-goals-builder` | `00_Title_Page` |  |
+| MATCH | `cs-concept-builder` | `scripts/cs_goals_reader.py`:107 | `read_cs_goals` | `cs-goals-builder` | `03_Cybersecurity_Goals` |  |
 | MATCH | `cs-goals-builder` | `scripts/tara_reader.py`:51, 54 | `read_tara_xlsx` | `tara-builder` | `11_Cybersecurity_Goals` |  |
 | MATCH | `cs-goals-builder` | `scripts/tara_reader.py`:59, 62 | `read_tara_xlsx` | `tara-builder` | `09_Risk_Determination` |  |
 | MATCH | `cs-goals-builder` | `scripts/tara_reader.py`:155, 163, 259, 260 | `_build_stride_index` | `tara-builder` | `05_Threat_Scenarios` |  |
@@ -127,9 +129,6 @@ For every reader function attributed to an upstream, each positional read (`ws.c
 | Chain | Tab | Verdict | Assertion | Issue |
 |---|---|---|---|---|
 | `sw-fmea-builder` → `tsc-builder` | `(scan: partition | sw_partition | sw_tsr | software_tsr)` | SCAN-MISS | pattern scan finds a tab | **not yet filed** |
-| `cs-concept-builder` → `cs-goals-builder` | `03_Cybersecurity_Goals` | ROW-SKIP | data from row 5 | [#65](https://github.com/jherrodthomas/automotive-skills-suite/issues/65) |
-| `cs-concept-builder` → `cs-goals-builder` | `03_Cybersecurity_Goals` | COL-SHIFT | col 4 as `cal` | [#65](https://github.com/jherrodthomas/automotive-skills-suite/issues/65) |
-| `cs-concept-builder` → `cs-goals-builder` | `03_Cybersecurity_Goals` | COL-SHIFT | col 6 as `csg_text` | [#65](https://github.com/jherrodthomas/automotive-skills-suite/issues/65) |
 | `sw-arch-builder` → `tsc-builder` | `03_System_Architecture` | COL-SHIFT | col 5 as `asil` | **not yet filed** |
 | `sw-arch-builder` → `tsc-builder` | `03_System_Architecture` | COL-SHIFT | col 6 as `notes` | **not yet filed** |
 | `sw-arch-builder` → `tsc-builder` | `05_TSR_Catalog` | COL-SHIFT | col 3 as `fsr_ref` | **not yet filed** |
@@ -146,9 +145,6 @@ For every reader function attributed to an upstream, each positional read (`ws.c
 | Verdict | Reader | Script:line | Function | Upstream | Tab | Assertion | Note |
 |---|---|---|---|---|---|---|---|
 | SCAN-MISS | `sw-fmea-builder` | `scripts/tsc_reader.py`:51 | `read_tsc` | `tsc-builder` | `(scan: partition | sw_partition | sw_tsr | software_tsr)` | pattern scan finds a tab | no tab the upstream emits matches these substrings; every read under it is dead |
-| ROW-SKIP | `cs-concept-builder` | `scripts/cs_goals_reader.py`:43 | `read_cs_goals` | `cs-goals-builder` | `03_Cybersecurity_Goals` | data from row 5 | upstream header is row 1; the first 3 data row(s) are never read |
-| COL-SHIFT | `cs-concept-builder` | `scripts/cs_goals_reader.py`:43 | `read_cs_goals` | `cs-goals-builder` | `03_Cybersecurity_Goals` | col 4 as `cal` | upstream col 4 is `CS_Goal_Text`; `CAL` is at col 5 |
-| COL-SHIFT | `cs-concept-builder` | `scripts/cs_goals_reader.py`:43 | `read_cs_goals` | `cs-goals-builder` | `03_Cybersecurity_Goals` | col 6 as `csg_text` | upstream col 6 is `Cybersecurity_Property`; `CSG_ID` is at col 1 |
 | COL-SHIFT | `sw-arch-builder` | `scripts/tsc_reader.py`:93 | `read_tsc` | `tsc-builder` | `03_System_Architecture` | col 5 as `asil` | upstream col 5 is `RTOS / OS`; `ASIL (developed-to)` is at col 6 |
 | COL-SHIFT | `sw-arch-builder` | `scripts/tsc_reader.py`:93 | `read_tsc` | `tsc-builder` | `03_System_Architecture` | col 6 as `notes` | upstream col 6 is `ASIL (developed-to)`; `Notes` is at col 7 |
 | COL-SHIFT | `sw-arch-builder` | `scripts/tsc_reader.py`:112 | `read_tsc` | `tsc-builder` | `05_TSR_Catalog` | col 3 as `fsr_ref` | upstream col 3 is `Allocated ASIL`; `TSR_ID` is at col 1 |
@@ -162,7 +158,6 @@ For every reader function attributed to an upstream, each positional read (`ws.c
 | COL-SHIFT | `sw-sr-builder` | `scripts/tsc_reader.py`:103 | `read_tsc` | `tsc-builder` | `06_HSI_Specification` | col 7 as `update_rate` | upstream col 7 is `Integrity Protection`; `Update Rate` is at col 6 |
 | COL-SHIFT | `sw-sr-builder` | `scripts/tsc_reader.py`:103 | `read_tsc` | `tsc-builder` | `06_HSI_Specification` | col 8 as `integrity` | upstream col 8 is `Failure Reaction`; `Integrity Protection` is at col 7 |
 | COL-WEAK | `cs-architecture-builder` | `scripts/cs_concept_reader.py`:138 | `read_cs_concept` | `cs-concept-builder` | `02_CS_Goals_Echo` | col 2 as `attack_type` | upstream col 2 is `Threat`; no header names this key |
-| COL-WEAK | `cs-concept-builder` | `scripts/cs_goals_reader.py`:43 | `read_cs_goals` | `cs-goals-builder` | `03_Cybersecurity_Goals` | col 5 as `driving_tara_ids` | upstream col 5 is `CAL`; no header names this key |
 | COL-WEAK | `hw-architecture-builder` | `scripts/tsc_reader.py`:118 | `read_tsc` | `tsc-builder` | `05_TSR_Catalog` | col 7 as `text` | upstream col 7 is `Technical Safety Requirement`; no header names this key |
 | COL-WEAK | `safety-case-builder` | `scripts/multi_xlsx_reader.py`:96 | `read_tsc` | `tsc-builder` | `05_TSR_Catalog` | col 7 as `text` | upstream col 7 is `Technical Safety Requirement`; no header names this key |
 | COL-WEAK | `safety-case-builder` | `scripts/multi_xlsx_reader.py`:137 | `read_fmeda` | `fmeda-builder` | `07_SPFM_Calculation` | col 2 as `pmhf` | upstream col 2 is `Σ(λ_SPF + λ_RF)`; no header names this key |
@@ -223,8 +218,6 @@ For every reader function attributed to an upstream, each positional read (`ws.c
 | COL-MATCH | `cs-architecture-builder` | `scripts/cs_concept_reader.py`:138 | `read_cs_concept` | `cs-concept-builder` | `02_CS_Goals_Echo` | col 4 as `severity`/`cal` | upstream `CAL` |
 | COL-MATCH | `cs-architecture-builder` | `scripts/cs_concept_reader.py`:138 | `read_cs_concept` | `cs-concept-builder` | `02_CS_Goals_Echo` | col 5 as `driving_tara_ids` | upstream `TARA IDs` |
 | COL-MATCH | `cs-architecture-builder` | `scripts/cs_concept_reader.py`:138 | `read_cs_concept` | `cs-concept-builder` | `02_CS_Goals_Echo` | col 6 as `goal_text` | upstream `CS Goal Text` |
-| COL-MATCH | `cs-concept-builder` | `scripts/cs_goals_reader.py`:43 | `read_cs_goals` | `cs-goals-builder` | `03_Cybersecurity_Goals` | col 2 as `threat` | upstream `Threat_Scenario_Ref` |
-| COL-MATCH | `cs-concept-builder` | `scripts/cs_goals_reader.py`:43 | `read_cs_goals` | `cs-goals-builder` | `03_Cybersecurity_Goals` | col 3 as `asset` | upstream `Asset` |
 | COL-MATCH | `fsc-builder` | `scripts/generate_fsc.py`:225 | `read_hara` | `hara-builder` | `13_Safety_Goals` | col 2 as `function` | upstream `Function` |
 | COL-MATCH | `fsc-builder` | `scripts/generate_fsc.py`:225 | `read_hara` | `hara-builder` | `13_Safety_Goals` | col 3 as `hazard` | upstream `Hazard` |
 | COL-MATCH | `fsc-builder` | `scripts/generate_fsc.py`:225 | `read_hara` | `hara-builder` | `13_Safety_Goals` | col 4 as `asil` | upstream `Worst-case ASIL` |

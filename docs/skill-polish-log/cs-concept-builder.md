@@ -369,3 +369,59 @@ The May-01/02 bulk-import padding fault family is now fully remediated across th
 **Suggested edits:** None to the skill. Recommend a human close #44 — definition of done is met and the wider corruption concern is disproven.
 
 **Severity:** low (resolved)
+
+---
+
+## 2026-09-24 — POLISH (W39 Thursday, issues #64 + #65)
+
+**Severity: HIGH (raised from MED) — fixed this run.** `scripts/cs_goals_reader.py` read the CS Goals
+workbook by fixed column position starting at row 5. `cs-goals-builder` writes
+`03_Cybersecurity_Goals` with its header on **row 1** and the layout
+`CSG_ID | Threat_Scenario_Ref | Asset | CS_Goal_Text | CAL | Cybersecurity_Property | ...`.
+
+### What was actually wrong (measured on the ESC sample chain, tara → cs-goals → cs-concept)
+
+The issue described a one-column echo shift. The real defect was larger and not confined to the echo:
+
+| Symptom | Before | After |
+|---|---|---|
+| Goals read | **12 of 15** — CSG-001..003 (firmware injection, calibration tampering, CAN spoofing) silently dropped | 15 of 15 |
+| CSRs generated | 192 | 240 |
+| `CAL` on every CSR | the goal's *text* ("Prevent CAN bus flooding…") | `CAL-4` ×160, `CAL-3` ×48, `CAL-2` ×32 |
+| `06_CAL_Allocation` inherited CAL | `CAL-1` on all 6 nodes | `CAL-3` on all 6 (see follow-up 1) |
+| Echo `TARA IDs` / `CS Goal Text` | CAL value / security property | scenario ref / goal text |
+
+So #65's "the echo makes a correct upstream look wrong" understated it: the misread fed the CSR
+catalog, the CAL allocation and the verification matrix, not just the echo.
+
+### Fix
+
+Header row located by scanning for the CSG ID header; every field located **by header name** with a
+small spelling table; `CAL 4` normalised to the `CAL-4` form the generator compares against; a missing
+CAL now warns on stderr instead of silently becoming `CAL-3`. `Threat` is filled from
+`02_TARA_Echo.Threat_Description` when present, `TARA IDs` from `Threat_Scenario_Ref`. One archive
+member changed (`scripts/cs_goals_reader.py`); verified by byte-comparing every member against HEAD.
+
+### Verification
+
+- DoD assertion from #65, run from the **repacked archive**: every one of the 15 input goals appears in
+  `02_CS_Goals_Echo` with its ID, asset, scenario ref, CAL and goal text under the correct header — `True`.
+- #64 acceptance: the column audit reported this edge as `ROW-SKIP` + 2×`COL-SHIFT` at commit 5dcce3d
+  (before the fix) and reports no column BREAK on it after. Caveat, stated plainly: after the fix the
+  edge has **no column assertions at all**, because the new reader resolves columns through a spelling
+  table the static audit does not parse. "Green" here means "no longer positional", not "positively
+  verified by the audit" — the positive evidence is the dynamic DoD check above.
+- `cs-concept-checklist-reviewer` over before/after workbooks: 29 checks, **0 verdicts change**. The
+  reviewer could not see 3 missing goals or goal text in the CAL column. That is a reviewer gap.
+
+### Follow-ups found, not fixed (one skill per slot)
+
+1. **CAL-4 is not modelled downstream (MED).** `build_cal_allocation` and `build_verification_matrix`
+   only know `CAL-1..CAL-3` (`CAL_COLORS`, the max-CAL chain, the `++` rules), and SKILL.md line 112
+   calls CAL-3 "highest CAL". ISO/SAE 21434 defines CAL 1-4 and cs-goals emits CAL 4. Result after this
+   fix: 160 CAL-4 CSRs, yet every node inherits CAL-3 and CAL-4 CSRs get only `+` verification.
+2. **cs-goals `02_TARA_Echo.Threat_Description` carries goal text (LOW-MED, cs-goals-builder).**
+   `tara_reader.py:352` sets `threat_description = cs_goal`, so the echo shows "Prevent …" where the
+   TARA says "Malicious firmware injection …". This reader echoes it faithfully; the defect is upstream.
+3. **cs-concept reviewer blind to goal count and CAL domain (MED, reviewer-finding).** A check that
+   echo row count equals upstream goal count, and that CSR CAL ∈ {CAL-1..CAL-4}, would have caught this.
