@@ -1,6 +1,6 @@
 # Skill Suite Status
 
-_Regenerated 2026-09-24 by autonomous daily run (`scripts/regen_status.py`)._
+_Regenerated 2026-09-25 by autonomous daily run (`scripts/regen_status.py`)._
 
 | Builder | Domain | Paired Reviewer | Last Touched | Flag |
 |---|---|---|---|---|
@@ -15,7 +15,7 @@ _Regenerated 2026-09-24 by autonomous daily run (`scripts/regen_status.py`)._
 | aspice-process-evidence-builder.skill | aspice | aspice-process-evidence-checklist-reviewer.skill | 2026-08-04 | 🟡 |
 | automotive-ethernet-builder.skill | comms | automotive-ethernet-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | autosar-adaptive-app-builder.skill | autosar | autosar-adaptive-app-checklist-reviewer.skill | 2026-08-26 | 🟢 |
-| autosar-bsw-config-builder.skill | autosar | autosar-bsw-config-checklist-reviewer.skill | 2026-08-25 | 🟢 |
+| autosar-bsw-config-builder.skill | autosar | autosar-bsw-config-checklist-reviewer.skill | 2026-08-25 | 🟡 |
 | autosar-composition-builder.skill | autosar | autosar-composition-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | autosar-rte-mapping-builder.skill | autosar | autosar-rte-mapping-checklist-reviewer.skill | 2026-08-26 | 🟢 |
 | autosar-swc-builder.skill | autosar | autosar-swc-checklist-reviewer.skill | 2026-05-21 | 🟡 |
@@ -26,7 +26,7 @@ _Regenerated 2026-09-24 by autonomous daily run (`scripts/regen_status.py`)._
 | communication-matrix-builder.skill | comms | communication-matrix-checklist-reviewer.skill | 2026-06-24 | 🟡 |
 | control-plan-builder.skill | quality | control-plan-checklist-reviewer.skill | 2026-06-18 | 🟡 |
 | cs-architecture-builder.skill | cyber | cs-architecture-checklist-reviewer.skill | 2026-08-12 | 🟡 |
-| cs-concept-builder.skill | cyber | cs-concept-checklist-reviewer.skill | 2026-07-21 | 🟡 |
+| cs-concept-builder.skill | cyber | cs-concept-checklist-reviewer.skill | 2026-09-24 | 🟢 |
 | cs-goals-builder.skill | cyber | cs-goals-checklist-reviewer.skill | 2026-09-22 | 🟢 |
 | dbc-builder.skill | comms | dbc-checklist-reviewer.skill | 2026-05-02 | 🟡 |
 | dcm-builder.skill | calibration | dcm-checklist-reviewer.skill | 2026-05-02 | 🟡 |
