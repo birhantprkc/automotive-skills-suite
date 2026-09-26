@@ -6,7 +6,11 @@ from `[Unreleased]` into a dated section at each weekly release.
 
 ## [Unreleased]
 
-_W39 (2026-09-21 → 2026-09-25). Accumulating since v2026.09.W38 (2026-09-19); ships at the next Saturday RELEASE run. Rolled by the Friday DOCS run (2026-09-25)._
+_W40 (2026-09-28 → 2026-10-02). Accumulating since v2026.09.W39 (2026-09-26)._
+
+## [v2026.09.W39] — 2026-09-26
+
+_W39 (2026-09-21 → 2026-09-25). Accumulating since v2026.09.W38 (2026-09-19). Rolled by the Friday DOCS run (2026-09-25) and shipped by the Saturday RELEASE run (2026-09-26)._
 
 ### Fix
 - **cs-goals-builder** — W39 Tue (2026-09-22, #62): `Cybersecurity_Property` was hard-coded `Confidentiality` on every CSG though the threat's STRIDE category determines it unambiguously. `_build_stride_index()` added beside the existing `_build_asset_index()` (same tab, `05_Threat_Scenarios`, already indexed by scenario ID) so the property is now derived per row; unmatched rows report `Not Determined` with a stderr warning instead of silently defaulting to `Confidentiality`. Verified on six scenarios — the shipped sample, an Information-Disclosure-stripped variant, the `09_Risk_Determination` fallback path, a TARA missing `05_Threat_Scenarios`, an unrecognised STRIDE value, and a full cell-by-cell before/after diff (`4604f67`)
