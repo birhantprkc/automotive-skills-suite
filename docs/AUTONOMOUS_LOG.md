@@ -1989,3 +1989,10 @@ chains, not just this one.
 - **Expected carry:** only 3 POLISH days exist this week for 5 filed targets; 2 will carry into W41 unless a fold-in happens. Not a problem by itself, but W41's plan should name which 2 explicitly rather than re-deriving it from the issue tracker.
 - **Human — still open from prior runs:** close #62-#65 (evidence in each issue's own comment); `v2026.09.W36`, `v2026.09.W38`, `v2026.09.W39` all tagged, pushed and still unpublished; #60/#61 reopened-or-abandoned; the `polish`-type-vs-exempt-`weekly-target` label decision (now seven-plus Sundays running); `examples/sample_dia_esc.json` dual-Accountable semantics; delete the unused `vv` duplicate label (`v-and-v` is the one in active use); the `csga_07_property_coverage` abbreviations-vs-full-names convention.
 - **Human, urgent, now a four-day pattern:** add `jherrodthomas/automotive-skills-suite` to this Claude session's/environment's authorized-repository set for both the git-push proxy and the `api.github.com` gate. Every mode needing the Issues API or a push keeps needing the `device_bash` detour, which works but is not a substitute for the actual fix the proxy's own error message names.
+
+## 2026-10-01 (autonomous run, MONTHLY-KPI)
+
+**Action:** Generated docs/monthly/2026-09.md
+**Velocity:** 25 commits, 34 archives touched (11 excluding the #63 24-reviewer batch commit); releases v2026.09.W36, W38, W39 (no W35/W37 tag); 8 calendar days with no commit (09-09→09-14, 09-29→09-30).
+**Coverage:** paired reviewer 76/76 (100.0%); builder examples 35/76 (46.1%, +4).
+**Notes:** Issues API read this run from the cloud sandbox succeeded once curl was pointed at certifi's CA bundle (the default `/etc/ssl/certs` file is missing here); the earlier 403 add_repo gate did not appear. September's engineering output was the strongest yet (column-level chain audit, pyflakes sweep found #69/#70 dead-on-arrival skills), but velocity fell and #62–#65 are once again finished-but-open, so the close-on-commit and heartbeat recommendations carry for a third month.
